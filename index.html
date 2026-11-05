@@ -40,7 +40,13 @@ body:not(.ene) .sec-ene{display:none!important}
 body:not([data-sec="flu"]) .sec-flu{display:none!important}
 #secSel{font-weight:600;color:var(--accent);max-width:230px}
 #ebx{font-size:11.5px;max-height:240px;overflow:auto}
-#ebxC{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:11.5px;margin-bottom:4px}#ebxC:empty{display:none}#ebxC button{padding:3px 8px;font-size:11.5px}#ebxC input[type=range]{width:96px}#ebxC label{display:inline-flex;align-items:center;gap:4px;color:var(--muted)}
+#ebxC{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:11.5px;margin-bottom:4px}#ebxC:empty{display:none}
+.chi-ev{margin:0 0 10px}.chi-ev b{font-size:12.5px}.chi-ev .note{margin:3px 0 0}
+.chi-do{margin:0 0 8px;padding-left:18px;font-size:12.5px;line-height:1.45}.chi-do li{margin-bottom:5px}
+.chi-tl{display:grid;gap:2px;margin-bottom:8px}.chi-tl button{display:grid;grid-template-columns:38px 1fr;gap:8px;text-align:left;padding:5px 8px;background:transparent;border-color:transparent}.chi-tl button:hover{border-color:var(--line2)}.chi-tl button.on{background:var(--panel2);box-shadow:inset 3px 0 0 var(--accent)}.chi-tl .y{font:500 12px var(--mono);color:var(--accent)}.chi-tl .n{font-size:12.5px}.chi-tl small{display:block;color:var(--muted);font-size:11px}
+#paneForm a{color:var(--accent)}
+body.touch[data-sec="chi"] #touch{display:none}
+@media (max-width:819px) and (orientation:portrait){body.touch[data-sec="chi"] #eb,body.touch[data-sec="chi"] #dock{bottom:calc(10px + env(safe-area-inset-bottom,0px))}body.touch[data-sec="chi"] #eb canvas{height:150px}body.touch[data-sec="chi"] #ebx{max-height:200px}}#ebxC button{padding:3px 8px;font-size:11.5px}#ebxC input[type=range]{width:96px}#ebxC label{display:inline-flex;align-items:center;gap:4px;color:var(--muted)}
 table.mt{width:100%;font:10.5px/1.35 var(--mono);border-collapse:collapse;font-variant-numeric:tabular-nums}
 table.mt th{color:var(--muted);font-weight:500;text-align:right;padding:1px 3px}table.mt td{text-align:right;padding:1px 3px;white-space:nowrap}
 table.mt td:first-child,table.mt th:first-child{text-align:left}table.mt tr.tot td{border-top:1px solid var(--line2);color:var(--ink);font-weight:600}
@@ -379,7 +385,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
     <div class="brand"><span class="eqmark">ΣF = m·a</span><b>Principia</b></div>
     <select id="secSel" title="Sección" aria-label="Sección">
       <option value="din">Dinámica</option><option value="ene">Energía y trabajo</option><option value="mom">Cantidad de movimiento</option><option value="rot">Rotación y momento angular</option>
-      <option value="grav">Gravitación y órbitas</option><option value="flu">Fluidos</option><option value="ond">Ondas y oscilaciones</option><option value="ref">Sistemas de referencia</option>
+      <option value="grav">Gravitación y órbitas</option><option value="flu">Fluidos</option><option value="ond">Ondas y oscilaciones</option><option value="ref">Sistemas de referencia</option><option value="chi">Chile: desastres naturales</option>
     </select>
     <div class="seg" id="modeSeg" role="group" aria-label="Modo">
       <button id="mBasic" data-mode="basic" class="on">Básico</button><button id="mAdv" data-mode="adv">Avanzado</button>
@@ -402,6 +408,15 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
         <option value="resorte">Resorte horizontal (MAS)</option>
         <option value="carrera">Rodar: traslación y rotación</option>
         <option value="yoyo">Yo-yo: energía de giro</option>
+       </optgroup>
+       <optgroup label="Chile: desastres naturales" data-sec="chi">
+        <option value="c_subduccion">Terremotos: la subducción</option>
+        <option value="c_magnitud">Magnitud: 1960, 2010, 2015 y 1985</option>
+        <option value="c_edificios">Edificios y resonancia</option>
+        <option value="c_tsunami">Tsunami: v = √(gh)</option>
+        <option value="c_volcan">Volcanes: Chaitén y Calbuco</option>
+        <option value="c_aluvion">Aluviones: agua y pendiente</option>
+        <option value="c_incendio">Incendios forestales</option>
        </optgroup>
        <optgroup label="Sistemas de referencia" data-sec="ref">
         <option value="s_ascensor">Ascensor: peso aparente</option>
@@ -630,6 +645,15 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
         <li>Press, W. H. et al. <em>Numerical Recipes</em>, 3.ª ed. Cambridge University Press, 2007.<span class="use">Integración numérica de ecuaciones diferenciales (Euler, métodos de mayor orden).</span></li>
         <li>Catto, E. «Iterative Dynamics with Temporal Coherence». Game Developers Conference, 2005.<span class="use">Método de impulsos secuenciales que usa el juego para los contactos de los cuerpos rígidos, la cuerda ideal como restricción unilateral y el balancín como cuerpo que solo gira en torno al fulcro.</span></li>
         <li>Catto, E. «Soft Constraints: Reinventing the Spring». Game Developers Conference, 2011.<span class="use">Contactos levemente elásticos: hacen única la forma en que se reparte la normal entre las esquinas de una caja apoyada.</span></li>
+      </ol>
+      <h3>Chile: fuentes de la sección</h3>
+      <ol class="refs">
+        <li>SENAPRED. <em>Desastres en la Memoria</em>. desastresenlamemoria.cl.<span class="use">Fechas, cifras y descripción de los eventos.</span></li>
+        <li>SENAPRED. Recomendaciones ante sismos, tsunamis, erupciones, aluviones e incendios forestales. senapred.cl.<span class="use">Bloques «Qué hacer».</span></li>
+        <li>USGS. M 8.8, 36 km WNW of Quirihue, Chile (2010).<span class="use">Convergencia de 71 mm/año entre las placas de Nazca y Sudamericana.</span></li>
+        <li>Hanks, T. C. y Kanamori, H. «A moment magnitude scale». <em>Journal of Geophysical Research</em>, 1979.<span class="use">Magnitud de momento.</span></li>
+        <li>Mastin, L. G. «Testing the accuracy of a 1-D volcanic plume model in estimating mass eruption rate». <em>Journal of Geophysical Research: Atmospheres</em>, 2014.<span class="use">Relación entre altura de columna y material emitido.</span></li>
+        <li>Noble, I. R., Bary, G. A. V. y Gill, A. M. «McArthur's fire-danger meters expressed as equations». <em>Australian Journal of Ecology</em>, 1980.<span class="use">Efecto de la pendiente sobre la rapidez del fuego.</span></li>
       </ol>
       <h3>Datos usados</h3>
       <p class="note">Roce lateral de neumáticos de ejemplo: asfalto seco 0,8; mojado 0,5; hielo 0,1. Gravedad superficial: Tierra 9,81; Luna 1,62; Marte 3,71; Júpiter 24,79 m/s². Densidad del aire a nivel del mar y 15 °C: 1,225 kg/m³. Coeficientes de arrastre típicos: esfera 0,47; cubo 1,05; auto ≈ 0,3. Los coeficientes de roce son valores de ejemplo y se pueden cambiar.</p>
@@ -1524,6 +1548,7 @@ function step(dt){
   for(const X of bodies.filter(b=>b.mergeInto)){ const Y=X.mergeInto, M=X.m+Y.m; Y.vel.multiplyScalar(Y.m).addScaledVector(X.vel,X.m).divideScalar(M); Y.m=M; Y.merged=(Y.merged||0)+X.m; removeEnt(X); }
   for(let it=0;it<2;it++){ for(const b of bodies) resolveStatic(b); for(let i=0;i<bodies.length;i++) for(let j=i+1;j<bodies.length;j++) collidePair(bodies[i],bodies[j],E); }
   rigidStep(dt,E);
+  if(CHI.s&&CHI.s.step) CHI.s.step(dt);
   for(const l of links) track(l);
   for(const r of ropes){ r.p.angle+=(r.taut?r.sdot:r.a.vel.dot(r.u1||UP))/r.p.R*dt; }
   if(lastKick&&lastKick.flying&&simT-lastKick.t0>0.15){ const kb=lastKick.ball; if(bodies.includes(kb)&&kb.support){ lastKick.flying=false;
@@ -1706,7 +1731,7 @@ const hexc=c=>'#'+c.toString(16).padStart(6,'0');
 const svgBlk=(c,s=14)=>`<rect x="${15-s/2}" y="${19-s}" width="${s}" height="${s}" fill="${hexc(c)}" stroke="#e8e4da" stroke-opacity=".55"/>`;
 const svgBall=(c,r=7.5)=>`<circle cx="15" cy="${19.5-r}" r="${r}" fill="${hexc(c)}" stroke="#121315" stroke-opacity=".5"/>`;
 const svgSat=c=>`<circle cx="9" cy="16" r="6" fill="#2d6f93"/><path d="M9 16m-10 0a10 7 0 1 0 20 -6" fill="none" stroke="#7fc4e8" stroke-dasharray="2 2"/><circle cx="23" cy="7" r="3" fill="${hexc(c)}"/>`;
-const ALLS=['din','ene','mom','rot','flu','ond','ref'];
+const ALLS=['din','ene','mom','rot','flu','ond','ref','chi'];
 const CATS=['Básicos','Cuerpos','Rodar y girar','Superficies','Uniones y soportes','Fluidos','Espacio','Ondas','Sistemas en movimiento'];
 const DENS=[['corcho','Corcho',240,0xd9b380],['madera','Madera',600,0xc9a26b],['hielo','Hielo',917,0xdff3ff],['ladrillo','Ladrillo',1900,0xb5543c],['aluminio','Aluminio',2700,0x9aa6b8],['hierro','Hierro',7870,0x6b7280],['oro','Oro',19300,0xffd166]];
 function orbitSat(f,esc){ return (hit,ev)=>{ const P=planets[0]; if(!P){ toast('Primero carga un escenario de Gravitación y órbitas.'); return; }
@@ -1782,7 +1807,8 @@ const HOT={din:['block','ball','car','ramp','platform','support','pulley','rope'
   grav:['sat','sat_lento','sat_rapido','sat_escape','luna','asteroide',null,null,'delete'],
   flu:['tank','corcho','madera','hielo','ladrillo','aluminio','hierro','oro','boya'],
   ond:['cuerda','support','pendulum','pend_corto','pend_largo','spring','block_s','ball','delete'],
-  ref:['ascensor','camion','persona','turntable','block_s','ball','support','pendulum','platform']};
+  ref:['ascensor','camion','persona','turntable','block_s','ball','support','pendulum','platform'],
+  chi:['block','ball','ramp','ramp45','platform','support','pendulum','spring','delete']};
 let curItem=ITEM.select, hotI=-1;
 const IO=()=>curItem&&curItem.tool===tool?curItem.o:{};
 const itemN={};
@@ -1811,7 +1837,7 @@ function renderBag(){ const q=$('#bagSearch').value.trim().toLowerCase(), sec=S.
     h+=`<div class="bag-cat">${c}</div><div class="bag-row">`+L.map(it=>`<button class="bitem${bar.includes(it.id)?' inbar':''}" data-item="${it.id}"><svg viewBox="0 0 30 24">${it.svg}</svg><span>${it.n}</span></button>`).join('')+'</div>'; }
   $('#bagGrid').innerHTML=h||'<p class="note">No hay objetos con ese nombre.</p>';
   $('#bagBar').innerHTML=bar.map((id,i)=>{ const it=id&&ITEM[id]; return `<button class="slot${i===bagSel?' on':''}" data-bslot="${i}" title="${it?it.n:'Vacía'}" aria-label="Casilla ${i+1}: ${it?it.n:'vacía'}"><kbd>${i+1}</kbd>${it?`<svg viewBox="0 0 30 24">${it.svg}</svg>`:''}</button>`; }).join(''); }
-function itemInfo(id){ const it=ITEM[id]; if(!it) return; const SN={din:'Dinámica',ene:'Energía',mom:'Cantidad de movimiento',rot:'Rotación',grav:'Gravitación',flu:'Fluidos',ond:'Ondas',ref:'Referencia'};
+function itemInfo(id){ const it=ITEM[id]; if(!it) return; const SN={din:'Dinámica',ene:'Energía',mom:'Cantidad de movimiento',rot:'Rotación',grav:'Gravitación',flu:'Fluidos',ond:'Ondas',ref:'Referencia',chi:'Chile'};
   $('#bagInfo').innerHTML=`<b>${it.n}</b> · ${it.d||''}<br>Sirve en: ${it.secs.length>=7?'casi todas las secciones':it.secs.map(x=>SN[x]).join(', ')}.`; }
 $$('.bag-tabs button').forEach(b=>b.onclick=()=>{ bagTab=b.dataset.bt; renderBag(); });
 $('#bagSearch').addEventListener('input',renderBag);
@@ -2363,13 +2389,14 @@ const SECS={din:{n:'Dinámica',eq:'ΣF = m·a',first:'patio'},
     enter:()=>{ groundMesh.visible=false; GRIDS.forEach(g=>g.visible=false); scene.fog.near=200; scene.fog.far=400; scene.background=SKY.space; hemi.intensity=0.45; },
     leave:()=>{ groundMesh.visible=true; GRIDS.forEach(g=>g.visible=true); scene.fog.near=60; scene.fog.far=180; scene.background=SKY.day; hemi.intensity=0.6; player.mesh.visible=camMode==='third'; }},
   rot:{n:'Rotación y momento angular',eq:'τ = dL/dt',first:'r_patinador',hud:b=>rotHUD(b),ov:()=>rotOverlay(),fx:(b,E)=>rotFormulas(b,E)},
+  chi:{n:'Chile: desastres',eq:'M₀ = μLWD',first:'c_subduccion',hud:()=>chiHUD(),ov:()=>chiDraw(),fx:()=>''},
   mom:{n:'Cantidad de movimiento',eq:'Σp = cte',first:'m_carros',hud:b=>momHUD(b),ov:()=>momOverlay(),fx:(b,E)=>momFormulas(b,E),g:'p'}};
 const OV=[];   // objetos 3D propios de alguna sección: se ocultan y cada sección muestra los suyos
 // controles fijos del panel (no se rehacen en cada cuadro, para no perder el foco del deslizador)
 function hudControls(key,html,bind){ const c=$('#ebxC'); if(c._k===key) return; c._k=key; c.innerHTML=html||''; if(bind) bind(c); }
 function hudHTML(title,html){ $('#ebh').innerHTML=title; $('#ebc').style.display='none'; const x=$('#ebx'); x.style.display=''; if(x._h!==html){ x.innerHTML=html; x._h=html; } }
 function setSection(sec,load){ hudControls(null); S.section=sec; if(typeof renderHotbar==='function'){ curItem=ITEM.select; setTool('select'); } const D=SECS[sec]; document.body.dataset.sec=sec; document.body.classList.toggle('ene',sec==='ene'); document.body.classList.toggle('hud',!!D.hud);
-  $('#secSel').value=sec; $('.eqmark').textContent=D.eq;
+  $('#secSel').value=sec; $('.eqmark').textContent=D.eq; $('[data-tab="form"]').textContent=sec==='chi'?'Contexto':'Fórmulas';
   $$('#sceneSel optgroup').forEach(g=>{ const on=g.dataset.sec===sec; g.hidden=!on; g.disabled=!on; });
   if(sel&&sel.isBody){ S.gcomp=D.g||(linksOf(sel).length?'o':'s'); syncK('gcomp'); }
   if(D.enter) D.enter(); for(const k in SECS) if(k!==sec&&SECS[k].leave) SECS[k].leave();
@@ -2729,7 +2756,8 @@ function momFormulas(b,E){
   if(b.merged) h+=fRow('Péndulo balístico',`${I('m')}${I('v')} = (${I('m')} + ${I('M')})${I('V')} , ½(${I('m')} + ${I('M')})${I('V')}<sup>2</sup> = (${I('m')} + ${I('M')})${I('g')}${I('h')}`,`masa ahora ${fmt(b.m)} kg (incluye ${fmt(b.merged)} kg del proyectil)`,'Primero un choque plástico (se conserva <i>p</i>, no <i>E</i><sub>c</sub>); después un péndulo (se conserva la energía).');
   return h; }
 function buildFormulas(){
-  const E=PP, adv=E.adv, b=sel&&sel.isBody?sel:null; let h='';
+  if(S.section==='chi'){ const p=$('#paneForm'), hh=chiPane(); if(p._h!==hh){ p.innerHTML=hh; p._h=hh; } return; }
+  $('#paneForm')._h=null; const E=PP, adv=E.adv, b=sel&&sel.isBody?sel:null; let h='';
   if(sel&&sel.kind==='beam'){ $('#paneForm').innerHTML=beamFormulas(sel,E); return; }
   if(sel&&sel.kind==='planet'){ $('#paneForm').innerHTML=`<div class="objh"><b>${sel.name}</b></div>`+fRow('Planeta',`${I('g')}<sub>sup</sub> = ${frac(I('G')+I('M'),I('R')+'<sup>2</sup>')}`,`<i>R</i> = ${fmt(sel.R)} m · <i>g</i><sub>sup</sub> = ${fmt(sel.g0)} m/s² · <i>GM</i> = ${fmt(sel.GM)} m³/s²`,'Selecciona un satélite para ver su órbita.'); return; }
   if(sel&&sel.kind==='turntable'){ $('#paneForm').innerHTML=sel.free?freeDiskFormulas(sel,E):ttFormulas(sel,E); return; }
@@ -3399,6 +3427,30 @@ const CHALLENGES=[
   release(st){ st.a.vel.set(st.v1,0,0); },
   measure(st){ return simT-st.t0>=1.6?st.b.vel.x:null; },
   sol:st=>`No hay fuerzas externas horizontales: Σ<i>p</i> antes = Σ<i>p</i> después. ${fmt(st.m1)}·${fmt(st.v1)} = (${fmt(st.m1)} + ${fmt(st.m2)})<i>v</i> ⇒ <i>v</i> = <b>${fmt(st.ans,3)} m/s</b>. La energía cinética baja de ${fmt(0.5*st.m1*st.v1**2)} J a ${fmt(0.5*(st.m1+st.m2)*st.ans**2)} J.`},
+ {id:'c_recurr',sec:'chi',name:'¿Cada cuánto tiembla?',topic:'Subducción',
+  make(){ const D=rnd(3,14,0.5), v=rnd(5,8,0.5); return {D,v,ans:D/(v/100),data:[['La falla aguanta hasta <i>D</i>',D,'m'],['La placa avanza <i>v</i>',v,'cm/año']]}; },
+  q:'Si la zona trabada se suelta justo al acumular ese deslizamiento, ¿cada cuántos años hay un gran sismo?', unit:'años', hint:`${I('T')} = ${I('D')}/${I('v')}`,
+  setup(st){ CHI.key='c_subduccion'; CHI.s=simSubduccion({Dc:st.D,v:st.v/100,rate:60,lock:true}); chiCam(...CHI_SCENES.c_subduccion.cam); },
+  measure(st){ const e=CHI.s&&CHI.s.first; return e?e.yr:null; },
+  sol:st=>`<i>T</i> = <i>D</i>/<i>v</i> = ${fmt(st.D)} m / ${fmt(st.v/100,3)} m/año = <b>${fmt(st.ans,0)} años</b>. La falla real es más irregular que este modelo.`},
+ {id:'c_mw',sec:'chi',name:'Calcula la magnitud',topic:'Magnitud de momento',
+  make(){ const L=rnd(100,1000,50), W=rnd(50,200,10), D=rnd(2,20,1); return {L,W,D,ans:chiMw(chiM0(L,W,D)),data:[['Largo <i>L</i>',L,'km'],['Ancho <i>W</i>',W,'km'],['Deslizamiento <i>D</i>',D,'m'],['Rigidez <i>μ</i>','5·10¹⁰','Pa']]}; },
+  q:'¿Qué magnitud de momento tiene el sismo?', unit:'Mw', hint:`${I('M')}<sub>w</sub> = ⅔(log<sub>10</sub>(${I('μ')}${I('L')}${I('W')}${I('D')}) − 9,1), todo en metros`,
+  setup(st){ CHI.key='c_subduccion'; CHI.s=simSubduccion({L:st.L,W:st.W,Dc:st.D,rate:120,lock:true}); chiCam(...CHI_SCENES.c_subduccion.cam); },
+  measure(st){ const e=CHI.s&&CHI.s.first; return e?e.Mw:null; },
+  sol:st=>`<i>M</i><sub>0</sub> = ${chiSci(chiM0(st.L,st.W,st.D))} N·m, así que <i>M</i><sub>w</sub> = ⅔(log<sub>10</sub> <i>M</i><sub>0</sub> − 9,1) = <b>${fmt(st.ans,2)}</b>.`},
+ {id:'c_tsu',sec:'chi',name:'¿Cuándo llega el tsunami?',topic:'Tsunami',
+  make(){ const h=rnd(2000,5000,500), D=rnd(100,300,50); return {h,D,ans:D*1000/Math.sqrt(CH_G*h)/60,data:[['Profundidad <i>h</i>',h,'m'],['Distancia',D,'km'],['Gravedad <i>g</i>',CH_G,'m/s²']]}; },
+  q:'¿Cuántos minutos tarda la cresta en recorrer esa distancia?', unit:'min', hint:`${I('t')} = ${I('d')}/√(${I('g')}${I('h')})`,
+  setup(st){ CHI.key='c_tsunami'; CHI.s=simTsunami({h:st.h,x0:50.5,gx:50+st.D,rate:150,lock:true}); chiCam(...CHI_SCENES.c_tsunami.cam); },
+  measure(st){ const s=CHI.s; return s&&s.gDone?s.gT/60:null; },
+  sol:st=>`<i>v</i> = √(<i>gh</i>) = ${fmt(Math.sqrt(CH_G*st.h),0)} m/s, así que <i>t</i> = ${fmt(st.D)} km / <i>v</i> = <b>${fmt(st.ans,1)} min</b>.`},
+ {id:'c_fs',sec:'chi',name:'¿Cuándo se suelta la ladera?',topic:'Aluviones',
+  make(){ let th,c,mc; do{ th=rnd(30,40,1); c=rnd(2,8,1); const t=th*DEG, f=32*DEG; mc=(19/9.81)*(1-(1-c/(19*3*Math.sin(t)*Math.cos(t)))*Math.tan(t)/Math.tan(f)); }while(mc<0.12||mc>0.88); return {th,c,ans:mc*100,data:[['Pendiente <i>θ</i>',th,'°'],['Cohesión <i>c</i>',c,'kPa'],['Ángulo de roce <i>φ</i>',32,'°'],['Espesor <i>z</i>',3,'m'],['Peso del suelo <i>γ</i>',19,'kN/m³'],['Peso del agua <i>γ</i><sub>w</sub>',9.81,'kN/m³']]}; },
+  q:'Llueve y el suelo se va saturando. ¿Con qué saturación <i>m</i> baja el factor de seguridad a 1?', unit:'%', hint:`Despeja ${I('m')} de ${I('FS')} = ${I('c')}/(${I('γ')}${I('z')} sen ${I('θ')} cos ${I('θ')}) + (1 − ${I('m')}${I('γ')}<sub>w</sub>/${I('γ')}) tan ${I('φ')}/tan ${I('θ')} = 1`,
+  setup(st){ CHI.key='c_aluvion'; CHI.s=simAluvion({th:st.th,c:st.c,rain:0.05,lock:true}); chiCam(...CHI_SCENES.c_aluvion.cam); },
+  measure(st){ const s=CHI.s; return s&&s.fail?s.failM*100:null; },
+  sol:st=>`Haciendo <i>FS</i> = 1 y despejando se obtiene <i>m</i> = <b>${fmt(st.ans,0)} %</b>. El agua reduce la fuerza normal entre los granos, y con ella el roce.`},
  {id:'m_elastico',sec:'mom',name:'Choque elástico',topic:'Cantidad de movimiento y energía',
   make(){ let o; do{ o={m1:rnd(1,6,0.5),m2:rnd(1,6,0.5),v1:rnd(2,6,0.5)}; }while(Math.abs(o.m1-o.m2)<0.4); return {...o,ans:2*o.m1*o.v1/(o.m1+o.m2),ov:{friction:false,e:1},data:[['Bloque 1 <i>m</i><sub>1</sub>',o.m1,'kg'],['Rapidez de 1',o.v1,'m/s'],['Bloque 2 <i>m</i><sub>2</sub> (en reposo)',o.m2,'kg'],['Choque','elástico (<i>e</i> = 1)','']]}; },
   q:'¿Con qué rapidez sale el bloque 2 después del choque?', unit:'m/s', hint:`${I('v')}<sub>2</sub> = ${frac('2'+I('m')+'<sub>1</sub>',I('m')+'<sub>1</sub> + '+I('m')+'<sub>2</sub>')}${I('v')}<sub>1</sub>`,
@@ -3561,7 +3613,7 @@ $('#chX').onclick=()=>endChallenge();
 /* ===================== escenarios ===================== */
 let sceneFrictionOff=false, sceneSaved={};
 function sceneSet(k,v){ if(!(k in sceneSaved)) sceneSaved[k]=S[k]; S[k]=v; syncK(k); PP=eff(); }
-function clearAll(){ sceneCam=null; if(!player.inCar) player.mesh.visible=camMode==='third'; chains.length=0; movers.length=0; refView.frame='inercial'; hudControls(null); [...tanks].forEach(removeEnt); [...planets].forEach(removeEnt); [...tracks].forEach(removeEnt); [...turntables].forEach(removeEnt); [...beams].forEach(removeEnt); [...links].forEach(removeLink); [...supports].forEach(removeEnt); [...bodies].forEach(removeEnt); [...ramps].forEach(removeEnt); statics.filter(s=>s!==ground).forEach(removeEnt); [...pulleys].forEach(removeEnt); ropes.length=0;
+function clearAll(){ chiClear(); sceneCam=null; if(!player.inCar) player.mesh.visible=camMode==='third'; chains.length=0; movers.length=0; refView.frame='inercial'; hudControls(null); [...tanks].forEach(removeEnt); [...planets].forEach(removeEnt); [...tracks].forEach(removeEnt); [...turntables].forEach(removeEnt); [...beams].forEach(removeEnt); [...links].forEach(removeLink); [...supports].forEach(removeEnt); [...bodies].forEach(removeEnt); [...ramps].forEach(removeEnt); statics.filter(s=>s!==ground).forEach(removeEnt); [...pulleys].forEach(removeEnt); ropes.length=0;
   for(const k in counters) counters[k]=0; lastCollision=null; lastKick=null; select(null); simT=0; if(player.inCar) exitCar(); }
 function loadScene(name){
   endChallenge(); clearAll(); resetPlayerMotion(); paused=false; $('#bPause').textContent='Pausa'; player.pos.set(0,0,7); camYaw=0.5; camPitch=0.32; camDist=9; let msg='';
@@ -3775,8 +3827,154 @@ function loadScene(name){
   if(name==='s_frenazo'){ const M=addMover({name:'Camión',c:V(-8,0.45,0),h:V(3,0.15,1.2),axis:V(1,0,0),color:0x4fa79b,loop:false,profile:[[1,0],[3,3],[1,0],[1.5,-6],[30,0]]});
     const b=newBody('block',V(-10,1.0,0),{m:20,side:0.8,color:0xc9a26b}); b.name='Caja sobre el camión'; select(b); paused=true; $('#bPause').textContent='Reanudar'; refView.target=V(-2,1.2,0); camYaw=0; camPitch=0.2; camDist=16;
     msg=`Una caja de 20 kg sobre un camión. Presiona <kbd>P</kbd>. El camión acelera a 3 m/s² y la caja lo acompaña: el roce estático puede darle hasta <i>μ</i><sub>s</sub><i>g</i> = ${fmt(PP.muS*PP.g)} m/s². Después frena a 6 m/s²: el roce ya no alcanza y la caja sigue de largo, deslizando hacia adelante. Desde el camión parece que una fuerza la empuja: <i>F</i>* = −<i>m a</i><sub>0</sub>.`; }
+  if(name.startsWith('c_')) msg=chiLoad(name);
   $('#sceneSel').value=name; if(msg) toast(msg,9000); buildObjPane();
 }
+
+/* ===================== Chile: desastres y su física ===================== */
+// cada escenario es una maqueta con su propia simulación; s.step avanza la física, s.draw la muestra y s.hud llena el cuadro de datos
+const CHI={s:null,objs:[],key:''}, CH_G=9.81, MU_RIG=5e10;
+const chiMat=(c,o)=>new THREE.MeshStandardMaterial({color:c,roughness:.9,...o});
+function chiAdd(o){ scene.add(o); CHI.objs.push(o); return o; }
+function chiClear(){ CHI.objs.forEach(o=>drop(o)); CHI.objs.length=0; CHI.s=null; CHI.key=''; }
+function chiBox(w,h,d,c,x,y,z,o){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),chiMat(c,o)); m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true; return chiAdd(m); }
+function chiPoly(pts,depth,c,o){ const sh=new THREE.Shape(); pts.forEach(([x,y],i)=>i?sh.lineTo(x,y):sh.moveTo(x,y)); sh.closePath(); const g=new THREE.ExtrudeGeometry(sh,{depth,bevelEnabled:false}); g.translate(0,0,-depth/2); const m=new THREE.Mesh(g,chiMat(c,o)); m.castShadow=true; m.receiveShadow=true; return chiAdd(m); }
+function chiSea(x0,x1,y,depth,nx){ const g=new THREE.PlaneGeometry(x1-x0,depth,nx,1); g.rotateX(-Math.PI/2); g.translate((x0+x1)/2,y,0); const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0x1f7fc4,transparent:true,opacity:.62,roughness:.25,depthWrite:false,side:THREE.DoubleSide})); return chiAdd(m); }
+function chiWater(n,X,zf,floor,top0){ const g=new THREE.BufferGeometry(), P=new Float32Array((n+1)*6), idx=[]; for(let i=0;i<=n;i++){ const x=X(i); P.set([x,floor(i),zf,x,top0,zf],i*6); if(i<n){ const a=i*2; idx.push(a,a+2,a+1,a+1,a+2,a+3); } } g.setAttribute('position',new THREE.BufferAttribute(P,3)); g.setIndex(idx); const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0x2a8ccf,transparent:true,opacity:.55,depthWrite:false,side:THREE.DoubleSide})); m.frustumCulled=false; chiAdd(m); return i_y=>{ for(let i=0;i<=n;i++) P[i*6+4]=i_y(i); g.attributes.position.needsUpdate=true; }; }
+function chiPts(n,size,color,op=.9){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(n*3),3)); const m=new THREE.Points(g,new THREE.PointsMaterial({color,size,transparent:true,opacity:op,depthWrite:false})); m.frustumCulled=false; return chiAdd(m); }
+function chiCam(x,y,z,yaw,pitch,dist){ if(innerWidth<820){ x=0; dist*=clamp(1.3/(innerWidth/innerHeight),1,2.6); y-=dist*.22; } sceneCam=V(x,y,z); camYaw=yaw; camPitch=pitch; camDist=dist; player.mesh.visible=false; }
+const chiMw=M0=>(2/3)*(Math.log10(M0)-9.1), chiM0=(LKm,WKm,D)=>MU_RIG*LKm*1e3*WKm*1e3*D;
+function chiControls(s,defs,btns){ hudControls(CHI.key,defs.map(d=>`<label>${d.t}<input type="range" data-c="${d.k}" min="${d.min}" max="${d.max}" step="${d.step}"></label><span data-v="${d.k}"></span>`).join('')+(btns||[]).map((b,i)=>`<button data-b="${i}">${b.t}</button>`).join(''),
+  el=>{ const sync=()=>defs.forEach(d=>{ el.querySelector(`[data-c="${d.k}"]`).value=d.get?d.get(s):s[d.k]; el.querySelector(`[data-v="${d.k}"]`).innerHTML=d.f?d.f(s):`${fmt(s[d.k],d.dec)} ${d.u||''}`; });
+    el.oninput=e=>{ const k=e.target.dataset&&e.target.dataset.c, d=defs.find(x=>x.k===k); if(!d) return; if(d.set) d.set(s,+e.target.value); else s[k]=+e.target.value; if(s.changed) s.changed(k); sync(); };
+    el.onclick=e=>{ const b=e.target.dataset&&e.target.dataset.b; if(b===undefined) return; btns[+b].fn(s); if(s.changed) s.changed(); sync(); }; sync(); }); }
+const chiSci=x=>{ const e=Math.floor(Math.log10(x)); return `${fmt(x/10**e,1)}·10<sup>${e}</sup>`; };
+const chiKv=rows=>`<dl class="kv2">${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
+
+// 1. Subducción: resorte y bloque. La placa arrastra el borde del continente hasta que el roce no aguanta
+function simSubduccion(o={}){ const s={L:o.L??450,W:o.W??150,Dc:o.Dc??5.9,v:o.v??0.071,rate:o.rate??30,yr:0,D:0,rup:0,D0:0,events:[],lock:!!o.lock,t:0,lastYr:0}, z=8, yI=x=>3.4-(x+2)*0.2818, ca=Math.cos(Math.atan(0.2818)), sa=Math.sin(Math.atan(0.2818));
+  chiPoly([[-12,3.4],[-2,3.4],[9,yI(9)],[9,0],[5.6,0],[-2.3,2.4],[-12,2.4]],z,0x2c2f3a);
+  chiPoly([[-12,2.4],[-2.3,2.4],[5.6,0],[-12,0]],z,0x8a3b22);   // manto
+  chiPoly([[2,yI(2)],[9,yI(9)],[9,0],[12,0],[12,6.4],[9.5,7.4],[8,6.3],[5.5,5.5],[3,5.2],[2.6,5],[2,4.9]],z,0x6d5a42);
+  const front=chiPoly([[-1.7,yI(-1.7)],[2,yI(2)],[2,4.9],[0.6,4.4],[-1.7,3.62]],z,0x7d6a50);
+  const flo=x=>x<-2?3.4:x<-1.7?3.4:x<0.6?3.62+(x+1.7)/2.3*.78:x<2?4.4+(x-.6)/1.4*.5:4.9+(x-2)/.6*.1, wat=chiWater(146,i=>-12+i*.1,z/2+.01,i=>flo(-12+i*.1),5), sea=chiSea(-12,2.6,5,z,146), n=147, eta=new Float64Array(n), ev=new Float64Array(n), pos=sea.geometry.attributes.position;
+  const marks=[]; for(let i=0;i<12;i++){ const m=new THREE.Mesh(new THREE.BoxGeometry(.5,.09,z+.04),chiMat(0xf2b134)); chiAdd(m); marks.push(m); } s.mk=0;
+  s.step=dt=>{ s.t+=dt; const ad=dt*s.rate; if(s.rup>0){ s.rup-=dt; s.D=Math.max(0,s.D0*Math.max(0,s.rup)/0.35); } else { s.yr+=ad; s.D+=s.v*ad; s.mk+=s.v*ad;
+      if(s.D>=s.Dc){ const M0=chiM0(s.L,s.W,s.D), ev0={yr:s.yr,dt:s.yr-s.lastYr,D:s.D,Mw:chiMw(M0),M0}; s.lastYr=s.yr; s.events.push(ev0); if(s.events.length>6) s.events.shift(); s.nEv=(s.nEv||0)+1; s.first=s.first||ev0; s.D0=s.D; s.rup=0.35;
+        const A=clamp(0.05*(ev0.Mw-7),0.04,.28); for(let i=0;i<n;i++){ const x=-12+i*0.1; eta[i]+=A*Math.exp(-(((x+0.6)/0.9)**2)); } } }
+    const c2=(5*dt/0.1)**2; for(let i=1;i<n-1;i++) ev[i]+=c2*(eta[i+1]-2*eta[i]+eta[i-1]); for(let i=1;i<n-1;i++){ ev[i]*=0.9985; eta[i]+=ev[i]; } };
+  s.draw=()=>{ const u=s.D/Math.max(s.Dc,1e-6), d=0.55*u, sh=s.rup>0?Math.sin(s.t*90)*0.05:0; front.position.set(ca*d+sh,-sa*d,0); for(let i=0;i<n;i++) for(let j=0;j<2;j++) pos.setY(i+j*n,5+eta[i]); pos.needsUpdate=true; sea.geometry.computeVertexNormals(); wat(i=>5+eta[i]);
+    const per=1.6, tot=per*marks.length, vis=(s.mk/Math.max(s.Dc,1e-6))*0.55; marks.forEach((m,i)=>{ const q=((i*per+vis)%tot)-tot+6; let x,y,r=0; if(q<0){ x=-2+q; y=3.42; } else { x=-2+q*ca; y=3.4-q*sa; r=-Math.atan(0.2818); } m.visible=x>-11.9&&x<8.9; m.position.set(x,y,0); m.rotation.z=r; });
+    label(V(-8,3.6,4),'Placa de Nazca →','#efede7',undefined,true); label(V(7,5.8,4),'Placa Sudamericana','#efede7',undefined,true); label(V(-2,3.4,4),'Fosa','#f2b134',undefined,true); label(V(1,3.2,4),s.rup>0?'¡Se suelta!':'Zona trabada','#ff8a3d',undefined,true); label(V(-6,5.3,4),'Océano Pacífico','#d8ecff',undefined,true); };
+  s.hud=()=>{ if(!s.lock) chiControls(s,[{k:'L',t:'largo <i>L</i>',min:50,max:1000,step:10,u:'km',dec:0},{k:'W',t:'ancho <i>W</i>',min:30,max:250,step:5,u:'km',dec:0},{k:'Dc',t:'aguanta hasta <i>D</i>',min:1,max:25,step:0.1,u:'m'}],[{t:'Valdivia 1960',fn:x=>{ x.L=1000;x.W=200;x.Dc=20; }},{t:'Maule 2010',fn:x=>{ x.L=450;x.W=150;x.Dc=5.9; }}]);
+    const e=s.events[s.events.length-1], next=chiMw(chiM0(s.L,s.W,s.Dc)); hudHTML('Terremoto de subducción · el modelo del resorte y el bloque',chiKv([['años simulados',`${fmt(s.yr,0)} años`],['deslizamiento acumulado <i>D</i> = <i>v t</i>',`${fmt(s.D)} de ${fmt(s.Dc)} m`],['rapidez de la placa <i>v</i>',`${fmt(s.v*100,1)} cm/año`],['próximo sismo cada <i>D</i>/<i>v</i>',`${fmt(s.Dc/s.v,0)} años`],['magnitud que tendrá',`<b>M<sub>w</sub> ${fmt(next,1)}</b>`],['último sismo',e?`M<sub>w</sub> ${fmt(e.Mw,1)} en el año ${fmt(e.yr,0)}`:'todavía ninguno']])); };
+  s.changed=()=>{ s.D=Math.min(s.D,s.Dc*0.98); }; return s; }
+
+// 2. Magnitud: cubos cuyo volumen es proporcional a la energía
+function simMagnitud(){ const s={live:false,M:7}, L=[['Algarrobo 1985',8.0,0x6f9bd6],['Illapel 2015',8.4,0x4fa79b],['Maule 2010',8.8,0xe3a04f],['Valdivia 1960',9.5,0xc2452d]], side=m=>0.9*10**(0.5*(m-8));
+  let x=-7.2; const cubes=L.map(([n,m,c])=>{ const a=side(m); x+=a/2; const b=chiBox(a,a,a,c,x,a/2,0); const q={n,m,x,a,b}; x+=a/2+1.3; return q; });
+  const u=chiBox(1,1,1,0xefede7,-9.2,.5,0); s.draw=()=>{ const a=side(s.M); u.scale.set(a,a,a); u.position.y=a/2; cubes.forEach(q=>label(V(q.x,q.a+.05,q.a/2),`${q.n} · M<sub>w</sub> ${fmt(q.m,1)}`,'#efede7',undefined,true)); label(V(-9.2,a+.05,a/2),`Tú · M<sub>w</sub> ${fmt(s.M,1)}`,'#f2b134',undefined,true); };
+  s.hud=()=>{ chiControls(s,[{k:'M',t:'magnitud <i>M</i><sub>w</sub>',min:5,max:9.5,step:0.1,dec:1}]); const E=m=>10**(1.5*m+4.8); hudHTML('La escala es logarítmica',`<table class="mt"><tr><th>sismo</th><th>M<sub>w</sub></th><th>energía (J)</th><th>veces tu sismo</th></tr>`+L.map(([n,m])=>`<tr><td>${n}</td><td>${fmt(m,1)}</td><td>${chiSci(E(m))}</td><td>${(10**(1.5*(m-s.M))).toLocaleString('es',{maximumSignificantDigits:3})}</td></tr>`).join('')+`</table><p class="note">Sumar 1 a la magnitud multiplica la energía por 10<sup>1,5</sup> ≈ 32. El cubo de ${fmt(s.M,1)} tiene el volumen proporcional a su energía.</p>`); }; return s; }
+
+// 3. Edificios: oscilador de un grado de libertad con la base en movimiento
+function simEdificios(){ const s={f:1.67,A:0.1,iso:0,zeta:0.05,t:0,bs:[]}, FL=0.34; [[2,-6],[6,-1.5],[15,4]].forEach(([N,x0])=>{ const fl=[]; for(let i=0;i<N;i++){ fl.push(chiBox(2,FL*0.82,2,0xb9c0c8,x0,0.42+FL*(i+.5),0)); } s.bs.push({N,x0,fl,x:0,v:0,amp:0}); });
+  const table=chiBox(17,.4,4.4,0x4b4d53,0,.2,0); s.T=b=>s.iso?2.5:0.1*b.N; s.Z=()=>s.iso?0.15:s.zeta;
+  s.step=dt=>{ s.t+=dt; const ag=s.A*CH_G*Math.sin(2*Math.PI*s.f*s.t); for(const b of s.bs){ const w=2*Math.PI/s.T(b), z=s.Z(); b.v+=(-2*z*w*b.v-w*w*b.x-ag)*dt; b.x+=b.v*dt; b.amp=Math.max(Math.abs(b.x),b.amp*(1-dt*0.25)); } };
+  s.draw=()=>{ const xg=clamp(-(s.A*CH_G)/((2*Math.PI*s.f)**2)*Math.sin(2*Math.PI*s.f*s.t),-.35,.35)*0.6; table.position.x=xg; for(const b of s.bs){ const H=3*b.N, dr=b.amp/H, col=dr>0.015?0xc2452d:dr>0.005?0xe3a04f:0xb9c0c8, vis=clamp(b.x*0.117*4,-2.2,2.2); b.fl.forEach((m,i)=>{ const q=s.iso?1:(i+1)/b.N; m.position.x=b.x0+xg+vis*q; if(m.material.color.getHex()!==col) m.material.color.setHex(col); }); label(V(b.x0,.5+FL*b.N+.1,1),`${b.N} pisos · <i>T</i> = ${fmt(s.T(b),2)} s`,'#efede7',undefined,true); } };
+  s.hud=()=>{ chiControls(s,[{k:'f',t:'frecuencia del suelo <i>f</i>',min:0.2,max:6,step:0.01,u:'Hz',dec:2},{k:'A',t:'aceleración',min:0.02,max:0.68,step:0.01,f:x=>`${fmt(x.A,2)} <i>g</i>`},{k:'iso',t:'aislación basal',min:0,max:1,step:1,f:x=>x.iso?'sí':'no'}],s.bs.map(b=>({t:`Resonar ${b.N} pisos`,fn:x=>{ x.f=+(1/x.T(b)).toFixed(2); }})));
+    hudHTML('Resonancia · oscilador forzado con base móvil',`<table class="mt"><tr><th>edificio</th><th>T (s)</th><th>f·T</th><th>ampliación</th><th>x (cm)</th><th>deriva</th></tr>`+s.bs.map(b=>{ const T=s.T(b), r=s.f*T, z=s.Z(), Q=1/Math.sqrt((1-r*r)**2+(2*z*r)**2), dr=b.amp/(3*b.N); return `<tr${dr>0.015?' style="color:var(--bad)"':''}><td>${b.N} pisos</td><td>${fmt(T,2)}</td><td>${fmt(r,2)}</td><td>${fmt(Q,1)}×</td><td>${fmt(b.amp*100,1)}</td><td>${fmt(dr*100,2)} %</td></tr>`; }).join('')+`</table>`); }; return s; }
+
+// 4. Tsunami: ecuaciones de aguas someras lineales sobre un fondo real
+function simTsunami(o={}){ const N=400, dx=1000, dtm=3, flat=o.h, s={A:o.A??5,rate:o.rate??120,t:0,acc:0,lock:!!o.lock,x0:o.x0??150,gx:o.gx??null,gMax:0,gT:null,cMax:0,arr:null}, eta=new Float64Array(N), u=new Float64Array(N+1), hf=new Float64Array(N+1);
+  const depth=xk=>flat?flat:xk<300?4000:xk<370?4000-(xk-300)/70*3800:Math.max(20,200-(xk-370)/28*180); for(let i=0;i<=N;i++) hf[i]=depth(i);
+  const sX=xk=>(xk/400-.5)*24, Y0=3.1, hV=2.7/(flat?Math.max(flat,4000):4000), z=7; s.depth=depth;
+  const pts=[[sX(0),.0]]; for(let i=0;i<=400;i+=5) pts.push([sX(i),Y0-depth(i)*hV]); pts.push([sX(400),Y0+.1],[14.2,Y0+.75],[14.2,0]); chiPoly(pts,z,0x6d5a42);
+  const wat=chiWater(200,i=>sX(i*2),z/2+.01,i=>Y0-depth(i*2)*hV,Y0), sea=chiSea(sX(0),sX(400),Y0,z,200), pos=sea.geometry.attributes.position; for(let i=0;i<5;i++) chiBox(.32,.3,.32,0xc9c3b6,12.6+.3*(i%2),Y0+.48,-2.4+i*1.2);
+  s.reset=()=>{ eta.fill(0); u.fill(0); for(let i=0;i<N;i++) eta[i]=s.A*Math.exp(-((((i+.5)-s.x0)/25)**2)); s.t=0; s.cMax=0; s.arr=null; s.gMax=0; s.gT=null; s.gDone=false; }; s.reset(); s.eta=eta;
+  s.stepM=()=>{ for(let i=1;i<N;i++) u[i]-=dtm*CH_G*(eta[i]-eta[i-1])/dx; u[0]=-Math.sqrt(CH_G/hf[0])*eta[0]; u[N]=flat?Math.sqrt(CH_G/hf[N])*eta[N-1]:0; for(let i=0;i<N;i++) eta[i]-=dtm*(hf[i+1]*u[i+1]-hf[i]*u[i])/dx; s.t+=dtm;
+    if(s.gx!==null&&!s.gDone){ const e=eta[s.gx]; if(e>s.gMax){ s.gMax=e; s.gT=s.t; } else if(s.gMax>0.1*s.A&&e<0.9*s.gMax) s.gDone=true; }
+    if(!flat){ const c=Math.max(eta[N-1],eta[N-2],eta[N-3]); if(c>s.cMax) s.cMax=c; if(s.arr===null&&c>0.05*s.A) s.arr=s.t; if(s.t>9000) s.reset(); } };
+  s.step=dt=>{ s.acc+=dt*s.rate; while(s.acc>=dtm){ s.stepM(); s.acc-=dtm; } };
+  s.peak=()=>{ let m=-1,k=s.x0|0; for(let i=s.x0|0;i<N;i++) if(eta[i]>m){ m=eta[i]; k=i; } return {k,m}; };
+  s.draw=()=>{ for(let i=0;i<=200;i++){ const e=eta[Math.min(N-1,i*2)]; for(let j=0;j<2;j++) pos.setY(i+j*201,Y0+clamp(e*0.16,-.9,1.6)); } pos.needsUpdate=true; sea.geometry.computeVertexNormals(); wat(i=>Y0+clamp(eta[Math.min(N-1,i*2)]*0.16,-.9,1.6)); const p=s.peak(); if(p.m>0.02) label(V(sX(p.k),Y0+p.m*.16+.25,z/2),`${fmt(p.m,1)} m · ${fmt(Math.sqrt(CH_G*depth(p.k))*3.6,0)} km/h`,'#d8ecff',undefined,true); label(V(sX(40),Y0-2.3,z/2),'Fondo a 4.000 m','#efede7',undefined,true); if(!flat) label(V(13,Y0+.9,z/2),'Costa','#f2b134',undefined,true); };
+  s.hud=()=>{ if(!s.lock) chiControls(s,[{k:'A',t:'altura inicial',min:1,max:10,step:0.5,u:'m',dec:1}],[{t:'Lanzar de nuevo',fn:x=>x.reset()}]); const p=s.peak(), h=depth(p.k), c=Math.sqrt(CH_G*h), gr=(s.A/2)*(4000/h)**.25;
+    hudHTML(`Tsunami · <i>v</i> = √(<i>gh</i>) · ${fmt(s.t/60,0)} min desde el sismo`,chiKv([['profundidad bajo la cresta',`${fmt(h,0)} m`],['rapidez <i>v</i> = √(<i>gh</i>)',`${fmt(c,0)} m/s = ${fmt(c*3.6,0)} km/h`],['altura de la cresta',`${fmt(p.m,2)} m`],['ley de Green (<i>A</i> ∝ <i>h</i><sup>−1/4</sup>)',`≈ ${fmt(gr,2)} m`],['llegada a la costa',s.arr===null?'todavía no':`${fmt(s.arr/60,0)} min`],['nivel máximo en la costa',`${fmt(s.cMax,1)} m`]])); }; return s; }
+
+// 5. Volcán: la columna (Mastin 2014) y las bombas con arrastre
+function chiFall(d,rho){ const vS=rho*CH_G*d*d/(18*1.8e-5), vN=Math.sqrt(4*rho*CH_G*d/(3*1.2)); return 1/(1/vS+1/vN); }
+function chiBomb(v0,th,d,rho=2500,drag=true){ const vt=chiFall(d,rho), k=drag?CH_G/(vt*vt):0; let x=0,y=0,vx=v0*Math.cos(th),vy=v0*Math.sin(th); const h=0.02; for(let i=0;i<20000;i++){ const sp=Math.hypot(vx,vy); vx+=-k*sp*vx*h; vy+=(-CH_G-k*sp*vy)*h; x+=vx*h; y+=vy*h; if(y<0&&vy<0) break; } return x; }
+function simVolcan(){ const s={H:15,W:15,d:0.1,db:0.5,v0:200,t:0,rate:20}, N=1500, ash=chiPts(N,.75,0x3b3a3c,.5), B=30, bm=chiPts(B,.3,0x1b1b1d,1), pa=ash.geometry.attributes.position, pb=bm.geometry.attributes.position, seed=new Float32Array(N*3); for(let i=0;i<N*3;i++) seed[i]=Math.random();
+  const g=new THREE.CylinderGeometry(.45,5,2,48,4,true); g.translate(0,1,0); const cone=chiAdd(new THREE.Mesh(g,chiMat(0x2b2723))); cone.receiveShadow=true; cone.castShadow=true; const top=new THREE.Mesh(new THREE.CircleGeometry(.45,24).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:0xff6a2a})); top.position.y=2; chiAdd(top);
+  const bo=[]; const shot=i=>{ const a=Math.random()*2*Math.PI, th=(35+Math.random()*30)*DEG; bo[i]={x:0,y:2000,z:0,vx:s.v0*Math.cos(th)*Math.cos(a),vy:s.v0*Math.sin(th),vz:s.v0*Math.cos(th)*Math.sin(a),w:Math.random()*2}; }; for(let i=0;i<B;i++) shot(i);
+  s.Mdot=()=>140*s.H**4.14; s.step=dt=>{ s.t+=dt; const h=dt*s.rate, vt=chiFall(s.db,2500), k=CH_G/(vt*vt); for(let i=0;i<B;i++){ const b=bo[i]; if(b.w>0){ b.w-=dt; continue; } const sp=Math.hypot(b.vx,b.vy,b.vz); b.vx-=k*sp*b.vx*h; b.vz-=k*sp*b.vz*h; b.vy+=(-CH_G-k*sp*b.vy)*h; b.x+=b.vx*h; b.y+=b.vy*h; b.z+=b.vz*h; if(b.y<0){ shot(i); bo[i].w=Math.random(); } } };
+  s.draw=()=>{ const H=s.H, W=s.W/15, T=5; for(let i=0;i<N;i++){ const age=((s.t/T+seed[i*3])%1), r0=seed[i*3+1], a=seed[i*3+2]*6.283, rise=Math.min(1,age/0.45), y=2+H*rise, up=Math.max(0,age-.45)/.55, rad=(.3+y*.07)*Math.sqrt(r0)*(1+up*3); let x=rad*Math.cos(a)+W*up*H*1.1+W*.25*rise*rise*H*.25, z=rad*Math.sin(a)*(1+up*.8), yy=y-up*up*H*.12+ (r0-.5)*up*1.5; pa.setXYZ(i,x,yy,z); } pa.needsUpdate=true; for(let i=0;i<B;i++){ const b=bo[i]; pb.setXYZ(i,b.x/1000,b.w>0?-5:b.y/1000,b.z/1000); } pb.needsUpdate=true; label(V(0,2+H+1,0),`Columna: ${fmt(H,0)} km`,'#efede7',undefined,true); label(V(5,1.2,6),'Escala: 1 cuadro del piso = 1 km','#efede7',undefined,true); };
+  s.hud=()=>{ chiControls(s,[{k:'H',t:'altura de la columna',min:3,max:30,step:0.5,u:'km',dec:1},{k:'W',t:'viento',min:0,max:40,step:1,u:'m/s',dec:0},{k:'d',t:'grano de ceniza',min:0.02,max:2,step:0.01,u:'mm',dec:2},{k:'db',t:'bomba',min:0.05,max:2,step:0.05,u:'m',dec:2}],[{t:'Calbuco 2015',fn:x=>x.H=15},{t:'Chaitén 2008',fn:x=>x.H=20}]);
+    const dm=s.d/1000, vf=chiFall(dm,2000), tf=s.H*1000/vf, R0=chiBomb(s.v0,45*DEG,s.db,2500,false), R1=chiBomb(s.v0,45*DEG,s.db,2500,true); hudHTML('Erupción · empuje de Arquímedes y caída con roce del aire',chiKv([['material que sale <i>Ṁ</i> = 140 <i>H</i><sup>4,14</sup>',`${chiSci(s.Mdot())} kg/s`],['rapidez de caída del grano',`${fmt(vf,2)} m/s`],['tarda en caer',`${fmt(tf/3600,1)} horas`],['con viento llega a',`${fmt(s.W*tf/1000,0)} km`],[`alcance de la bomba (${fmt(s.v0,0)} m/s, 45°)`,`${fmt(R1/1000,1)} km; sin aire ${fmt(R0/1000,1)} km`]])); }; return s; }
+
+// 6. Aluvión: factor de seguridad de talud infinito y flujo de Voellmy
+function simAluvion(o={}){ const s={th:o.th??30,phi:o.phi??32,c:o.c??5,z:3,gam:19,m:0,rain:o.rain??0.08,raining:true,fail:false,failM:null,v:0,dist:0,rate:8,xi:500,lock:!!o.lock,maxV:0,t:0}, L=1000,U=70, gw=9.81; let mesh=null; const blocks=[], houses=[]; for(let i=0;i<90;i++) blocks.push({b:chiBox(.5,.3,.5,0x6b4a2b,0,0,0),s0:Math.random(),z:(Math.random()-.5)*6,k:.75+Math.random()*.5,y:Math.random()*.22}); for(let i=0;i<5;i++) houses.push({m:chiBox(.9,.8,.9,0xc9c3b6,0,0,0),s:(L+110+i*65),z:-2.5+i*1.25,hit:0});
+  const rain=chiPts(260,.06,0x9fc7e6,.7), pr=rain.geometry.attributes.position, sd=new Float32Array(780); for(let i=0;i<780;i++) sd[i]=Math.random();
+  s.build=()=>{ if(mesh){ drop(mesh); CHI.objs.splice(CHI.objs.indexOf(mesh),1); } const t=s.th*DEG, l=L/U, X=l*Math.cos(t), Y=l*Math.sin(t), f=8; s.x0=-X/2-2.5; s.Y=Y; mesh=chiPoly([[s.x0,Y],[s.x0+X,0.02],[s.x0+X+f,0.02],[s.x0+X+f,0],[s.x0,0]],8,0x5d6b45); s.X=X; };
+  s.build(); s.pt=(q,zz,h)=>{ const t=s.th*DEG; if(q<=L){ const d=q/U; return V(s.x0+d*Math.cos(t)+h*Math.sin(t),s.Y-d*Math.sin(t)+h*Math.cos(t),zz); } return V(s.x0+s.X+(q-L)/U,.02+h,zz); };
+  s.FS=()=>{ const t=s.th*DEG, f=s.phi*DEG; return s.c/(s.gam*s.z*Math.sin(t)*Math.cos(t))+(1-s.m*gw/s.gam)*Math.tan(f)/Math.tan(t); };
+  s.mc=()=>{ const t=s.th*DEG, f=s.phi*DEG; return (s.gam/gw)*(1-(1-s.c/(s.gam*s.z*Math.sin(t)*Math.cos(t)))*Math.tan(t)/Math.tan(f)); };
+  s.reset=()=>{ s.m=0; s.raining=true; s.fail=false; s.failM=null; s.v=0; s.dist=0; s.maxV=0; houses.forEach(h=>{ h.hit=0; h.m.rotation.z=0; }); blocks.forEach(b=>b.b.rotation.set(0,0,0)); };
+  s.step=dt=>{ s.t+=dt; if(!s.fail){ if(s.raining) s.m=Math.min(1,s.m+s.rain*dt); if(s.FS()<1){ s.fail=true; s.failM=s.m; } return; } const h=dt*s.rate, t=s.th*DEG, mu=(1-s.m*gw/s.gam)*Math.tan(s.phi*DEG); let a; if(s.dist<L) a=CH_G*(Math.sin(t)-mu*Math.cos(t))-CH_G*s.v*s.v/(s.xi*s.z); else a=-CH_G*mu*0.8-CH_G*s.v*s.v/(s.xi*s.z); s.v=Math.max(0,s.v+a*h); s.dist+=s.v*h; s.maxV=Math.max(s.maxV,s.v); };
+  s.draw=()=>{ const wet=1-.45*s.m; blocks.forEach(o=>{ const q=Math.min(L+540,o.s0*L*.42+L*.08+s.dist*o.k*(.8+.4*o.s0)), p=s.pt(q,o.z,o.y+.08); o.b.position.copy(p); o.b.rotation.z=-(q<L?s.th*DEG:0); o.b.material.color.setRGB(.28*wet,.17*wet,.09*wet); }); const front=L*.5+s.dist*1.3; houses.forEach(h=>{ const p=s.pt(h.s,h.z,.4); if(s.fail&&front>h.s) h.hit=Math.min(1,h.hit+.04); h.m.position.set(p.x+h.hit*1.8,p.y-.0-h.hit*.1,p.z); h.m.rotation.z=-h.hit*1.1; }); for(let i=0;i<260;i++){ const y=((1-((s.t*.9+sd[i*3])%1))*11); pr.setXYZ(i,s.x0+sd[i*3+1]*(s.X+8),s.raining&&!s.fail?y:-3,(sd[i*3+2]-.5)*8); } pr.needsUpdate=true; label(s.pt(L*.35,4.2,.9),s.fail?'¡Se desliza!':`Suelo: ${fmt(s.m*100,0)} % saturado`,s.fail?'#ff8a3d':'#efede7',undefined,true); };
+  s.changed=k=>{ if(k==='th') s.build(); };
+  s.hud=()=>{ if(!s.lock) chiControls(s,[{k:'th',t:'pendiente <i>θ</i>',min:15,max:45,step:1,u:'°',dec:0}],[{t:'Otra vez',fn:x=>x.reset()},{t:'Parar la lluvia',fn:x=>x.raining=false}]); const p=0.5*(s.gam*1000/CH_G)*s.maxV*s.maxV/1000, FS=s.FS(); hudHTML('Aluvión · el agua le quita apoyo al suelo',chiKv([['saturación <i>m</i>',`${fmt(s.m*100,0)} %`],['factor de seguridad <i>FS</i>',`<b${FS<1?' style="color:var(--bad)"':''}>${fmt(FS,2)}</b> ${FS<1?'(falla)':'(estable si > 1)'}`],['falla con saturación',s.mc()>=1?'no falla aunque se sature':s.mc()<=0?'falla incluso seco':`${fmt(s.mc()*100,0)} %`],['rapidez del flujo',`${fmt(s.v*3.6,0)} km/h (máx. ${fmt(s.maxV*3.6,0)})`],['recorrido',`${fmt(s.dist,0)} m`],['presión máxima ½<i>ρv</i>²',`${fmt(p,0)} kPa`]])); }; return s; }
+
+// 7. Incendio: autómata con la regla de la pendiente y el viento
+function simIncendio(o={}){ const nx=72, nz=44, c=.22, s={Sl:o.Sl??15,U:o.U??35,hum:o.hum??25,T:o.T??32,dirV:1,t:0,acc:0,lock:!!o.lock,burnt:0,hs:0,arrive:{}}, st=new Uint8Array(nx*nz), pr=new Float32Array(nx*nz), inc=new Float32Array(nx*nz), tb=new Float32Array(nx*nz), noise=new Float32Array(nx*nz), house=new Uint8Array(nx*nz); let lcg=12345; const rn=()=>{ lcg=(lcg*16807)%2147483647; return lcg/2147483647; }; for(let i=0;i<nx*nz;i++){ noise[i]=.85+.3*rn(); const ix=i%nx, iz=(i/nx)|0; house[i]=(ix>52&&ix<68&&(ix%3===0)&&(iz%3===1))?1:0; }
+  const geo=new THREE.BoxGeometry(c*.92,c,c*.92), mat=new THREE.MeshStandardMaterial({roughness:.9,color:0xffffff}), im=new THREE.InstancedMesh(geo,mat,nx*nz); im.frustumCulled=false; chiAdd(im); const bm=new THREE.Mesh(new THREE.BoxGeometry(1,.12,1),chiMat(0x3a3a2c)); chiAdd(bm); const q=new THREE.Quaternion(), mt=new THREE.Matrix4(), cl=new THREE.Color(), P0=V(), sc=V(); s.pos=(ix,iz,h)=>{ const t=s.Sl*DEG, x=(ix-nx/2)*c; return P0.set(x*Math.cos(t),x*Math.sin(t)+nx*c/2*Math.sin(t)+.15+h*Math.cos(t),(iz-nz/2)*c); };
+  const paint=i=>{ const ix=i%nx, iz=(i/nx)|0, S0=st[i], hh=house[i]; let h=S0===1?1.7:S0===2?.22:hh?1.5:1; if(hh&&S0===2) h=.5; const cs=S0===1?(rn()<.5?0xff7a18:0xffc02e):S0===2?0x26231f:hh?0xb9412d:(0x4c6b2c+((noise[i]-.85)*60|0)*65536); q.setFromAxisAngle(ZAX,s.Sl*DEG); const p=s.pos(ix,iz,c*h/2); sc.set(1,h,1); mt.compose(p,q,sc); im.setMatrixAt(i,mt); im.setColorAt(i,cl.setHex(cs)); }; s.dirty=true;
+  s.reset=()=>{ st.fill(0); pr.fill(0); tb.fill(0); s.t=0; s.acc=0; s.burnt=0; s.hs=0; s.tUp=null; s.tDn=null; const m=(nz>>1)*nx+(o.ix??14); st[m]=1; s.ig=o.ix??14; s.dirty=true; }; s.reset();
+  s.Rate=(dx,dz)=>{ const L=Math.hypot(dx,dz), cp=dx/L*s.dirV, ctx=dx/L, fm=Math.exp(-(s.hum-30)/25)*Math.exp((s.T-25)/40), Sd=s.Sl*ctx, slope=Sd>=0?2**(Sd/10):Math.max(.5,2**(Sd/10)), wind=1+0.06*s.U*Math.max(0,cp)**2; return 0.25*fm*slope*wind; };  // m/s
+  s.tick=h=>{ const cell=50, dtReal=h*60, ups=[], tch=[]; for(let i=0;i<nx*nz;i++){ if(st[i]!==1) continue; tb[i]+=h; const ix=i%nx, iz=(i/nx)|0; for(let dx=-1;dx<=1;dx++) for(let dz=-1;dz<=1;dz++){ if(!dx&&!dz) continue; const jx=ix+dx, jz=iz+dz; if(jx<0||jx>=nx||jz<0||jz>=nz) continue; const j=jz*nx+jx; if(st[j]) continue; const q0=s.Rate(dx,dz)*noise[j]*dtReal/(cell*Math.hypot(dx,dz)); if(q0>inc[j]){ if(!inc[j]) tch.push(j); inc[j]=q0; } } if(s.U>=40&&rn()<0.018*(s.U/40)*h*10){ const jx=ix+Math.round(s.dirV*(3+rn()*6)), jz=iz+Math.round((rn()-.5)*6), j=jz*nx+jx; if(jx>=0&&jx<nx&&jz>=0&&jz<nz&&!st[j]) ups.push(j); } if(tb[i]>5){ st[i]=2; s.burnt++; if(house[i]) s.hs++; paint(i); } }
+    for(const j of tch){ pr[j]+=inc[j]; inc[j]=0; if(pr[j]>=1) ups.push(j); }   // avanza con el vecino más rápido: sumarlos aceleraría el fuego de forma artificial
+    ups.forEach(j=>{ if(!st[j]){ st[j]=1; paint(j); const jx=j%nx, jz=(j/nx)|0; if(jz===nz>>1){ if(jx===s.ig+20&&s.tUp===null) s.tUp=s.t; if(jx===s.ig-10&&s.tDn===null) s.tDn=s.t; } } }); };
+  s.step=dt=>{ s.t+=dt; s.acc+=dt; while(s.acc>=.05){ s.tick(.05); s.acc-=.05; } };
+  s.draw=()=>{ if(s.dirty){ for(let i=0;i<nx*nz;i++) paint(i); s.dirty=false; const t=s.Sl*DEG; bm.scale.set(nx*c+.6,1,nz*c+.6); bm.rotation.z=t; bm.position.copy(s.pos(nx/2,nz/2,-.06)); } im.instanceMatrix.needsUpdate=true; if(im.instanceColor) im.instanceColor.needsUpdate=true; if(s.burnt===0&&s.t<1) return; label(s.pos(60,nz-2,.5).clone(),'Viviendas (interfaz)','#efede7',undefined,true); };
+  s.changed=k=>{ if(k==='Sl') s.dirty=true; };
+  s.hud=()=>{ if(!s.lock) chiControls(s,[{k:'Sl',t:'pendiente',min:0,max:40,step:1,u:'°',dec:0},{k:'U',t:'viento',min:0,max:100,step:1,u:'km/h',dec:0},{k:'hum',t:'humedad',min:5,max:70,step:1,u:'%',dec:0},{k:'T',t:'temperatura',min:10,max:40,step:1,u:'°C',dec:0}],[{t:'Encender otra vez',fn:x=>x.reset()},{t:'Viento 70 km/h',fn:x=>{ x.U=70; }},{t:'Sin viento',fn:x=>{ x.U=0; }}]); const f=s.T>=30&&s.hum<30&&s.U>30, rUp=s.Rate(1,0), rDn=s.Rate(-1,0), ha=s.burnt*.25; hudHTML(`Incendio forestal · ${fmt(s.t,0)} min desde el inicio`,chiKv([['cuesta arriba',`${fmt(rUp*60,0)} m/min`],['cuesta abajo',`${fmt(rDn*60,0)} m/min`],['por la pendiente, multiplicado por',`2<sup>θ/10</sup> = ${fmt(2**(s.Sl/10),1)}`],['superficie quemada',`${fmt(ha,0)} ha`],['viviendas alcanzadas',`${s.hs}`],['regla 30-30-30',f?'<b style="color:var(--bad)">se cumple</b>':'no se cumple'],['pavesas (saltos del fuego)',s.U>=40?'sí':'no']])); }; return s; }
+
+const CHI_SCENES={
+ c_subduccion:{mk:()=>simSubduccion(),cam:[2.5,3.6,0,0,.08,21],msg:'Bajo Chile, la placa de Nazca se mete bajo la Sudamericana unos 7 cm por año. El borde queda trabado por el roce y se va cargando como un resorte, hasta que se suelta de golpe. Cambia el tamaño de la falla o prueba Valdivia 1960.',
+  ev:[['Terremoto y tsunami de Valdivia, 22 de mayo de 1960','Duró 210 segundos y es el mayor registrado por instrumentos: 9,5. La zona de ruptura superó los 1.000 km, entre las penínsulas de Arauco y de Taitao. Dejó unos 1.600 fallecidos y 2.386.000 personas afectadas. También gatilló el «Riñihuazo»: derrumbes taparon el desagüe del lago Riñihue y se trabajó 64 días para vaciarlo de forma controlada.'],['Terremoto y tsunami del 27 de febrero de 2010','Magnitud 8,8, con 140 segundos de duración. Rompió un área de unos 450 × 150 km y afectó más de 630 km del territorio. Dejó 521 fallecidos, 56 desaparecidos y 81.444 viviendas destruidas.']],
+  fx:()=>fRow('Se carga como un resorte',`${I('D')} = ${I('v')}·${I('t')}`,'','La placa avanza a <i>v</i> ≈ 7,1 cm/año (USGS). Mientras la zona está trabada, ese avance se acumula como deformación elástica.')+fRow('El tamaño de un sismo',`${I('M')}<sub>0</sub> = ${I('μ')}·${I('L')}·${I('W')}·${I('D')}`,'','<i>μ</i> ≈ 5·10¹⁰ Pa es la rigidez de la roca (valor típico que asume este modelo); <i>L</i>, <i>W</i> y <i>D</i> son el largo, el ancho y el deslizamiento de la falla.')+fRow('Magnitud de momento',`${I('M')}<sub>w</sub> = ⅔ (log<sub>10</sub> ${I('M')}<sub>0</sub> − 9,1)`,'SENAPRED da para 1960 una ruptura de 1.000 × 200 km y 20 m de desplazamiento medio: <i>M</i><sub>w</sub> ≈ 9,5.','En 2010 no hay deslizamiento en la fuente: los 5,9 m del botón son lo que da 8,8 con ese tamaño de falla. El modelo es una simplificación: la falla real no se suelta a intervalos regulares.'),do:'sismo'},
+ c_magnitud:{mk:()=>simMagnitud(),cam:[2,2.6,0,.15,.12,19],msg:'Cada cubo tiene un volumen proporcional a la energía de su sismo. Una diferencia de 8,8 a 9,5 parece poca, pero es unas 11 veces más energía. Mueve la barra para comparar.',
+  ev:[['Terremoto de Algarrobo, 3 de marzo de 1985','Magnitud 8 Mw y falla de 120 km. Dejó 177 fallecidos y más de 75.000 viviendas destruidas. En Melipilla se midieron 0,679 g en horizontal.'],['Terremoto de Illapel, 16 de septiembre de 2015','SENAPRED lo informa con magnitud 8,4 (otras agencias dan 8,3). Dejó 15 fallecidos, 1 desaparecido y 660.635 evacuados. El tsunami llegó a Pichidangui 12 minutos después del sismo.']],
+  fx:()=>fRow('Magnitud y energía',`log<sub>10</sub> ${I('E')} = 1,5 ${I('M')} + 4,8`,'','Relación empírica de Gutenberg y Richter, con <i>E</i> en joule. Por eso un punto más de magnitud es unas 32 veces más energía.')+fRow('Magnitud no es intensidad','','','La magnitud es una sola por sismo y mide su tamaño. La intensidad (escala de Mercalli) mide los efectos en cada lugar: depende de la distancia, del suelo y de las construcciones. Por eso un mismo sismo tiene muchas intensidades.'),do:'sismo'},
+ c_edificios:{mk:()=>simEdificios(),cam:[2.5,2.6,0,.1,.12,15],msg:'Tres edificios sobre una mesa que vibra. Cada uno tiene su propio período. Cuando la frecuencia del suelo coincide con la del edificio, se mueve mucho más: es resonancia. Prueba los botones y luego activa la aislación basal.',
+  ev:[['Lo que dejó Algarrobo 1985','Sus registros, de 35 acelerógrafos, ayudaron a relacionar daño con aceleración y a estudiar el efecto del suelo. Esto incidió en el fortalecimiento de la norma NCh 433 de diseño sísmico de edificios.']],
+  fx:()=>fRow('Oscilador con la base en movimiento',`${I('x')}″ + 2${I('ζ')}${I('ω')}${I('x')}′ + ${I('ω')}²${I('x')} = −${I('a')}<sub>suelo</sub>`,'','Es el mismo oscilador forzado de la sección Ondas. <i>x</i> es cuánto se deforma el edificio respecto de su base.')+fRow('Período aproximado',`${I('T')} ≈ 0,1·${I('N')} s`,'','Regla práctica para <i>N</i> pisos, no un cálculo de diseño: el valor real depende de la estructura.')+fRow('Ampliación',`${frac('1','√((1 − '+I('r')+'²)² + (2'+I('ζ')+I('r')+')²)')}`,'Con <i>r</i> = 1 y 5 % de amortiguamiento, 10 veces.','<i>r</i> = <i>f</i>·<i>T</i>. La aislación basal alarga el período (aquí a 2,5 s) y suma amortiguamiento, así el edificio deja de seguir al suelo. Los movimientos dibujados están exagerados 4 veces.'),do:'sismo'},
+ c_tsunami:{mk:()=>simTsunami(),cam:[6,2.2,0,0,.1,22],msg:'Un sismo levanta el fondo y sale una onda. En mar profundo viaja como un avión y casi no se nota. Al llegar a la costa frena, y su energía se junta en poca agua: la ola crece. La altura está exagerada en el dibujo.',
+  ev:[['Tsunami de 1960','Llegó a Hawái 15 horas después, a más de 10.000 km, y causó 61 muertes en Hilo. En Japón murieron 139 personas, con olas de más de 6 m.'],['Tsunami de 2010','En Constitución las olas superaron los 27 m. El mar entró más de 300 m en San Juan Bautista, en Juan Fernández, una hora después del sismo.'],['Tsunami de Coquimbo, 2015','La primera onda llegó a Pichidangui a los 12 minutos. Por eso la evacuación no puede esperar.']],
+  fx:()=>fRow('Rapidez',`${I('v')} = √(${I('g')}${I('h')})`,'Con 4.000 m de profundidad: 198 m/s = 713 km/h.','Compruébalo con la historia: 10.000 km en 15 horas son 185 m/s, que corresponden a unos 3.500 m de profundidad media.')+fRow('La ola crece al llegar (ley de Green)',`${I('A')} ∝ ${I('h')}<sup>−1/4</sup>`,'','La energía se conserva, pero la onda frena y se comprime en menos agua. De 4.000 m a 20 m de profundidad, la altura crece unas 3,8 veces.')+fRow('Modelo','Aguas someras lineales','','Resuelve la propagación, pero no la inundación sobre tierra. Por eso los 27 m de Constitución no salen de esta maqueta.'),do:'tsunami'},
+ c_volcan:{mk:()=>simVolcan(),cam:[6,10,0,.1,.1,40],msg:'La mezcla caliente de gas y ceniza es menos densa que el aire y sube por empuje. Las rocas grandes salen como proyectiles. La ceniza fina cae lento y el viento la lleva lejos. Prueba Calbuco y Chaitén.',
+  ev:[['Volcán Chaitén, mayo de 2008','Llevaba unos 9.000 años inactivo. Su columna superó los 20 km, con un índice de explosividad 5. Se evacuó a más de 8.000 personas en la provincia, sin víctimas fatales. El 12 de mayo el río Blanco, obstruido por ceniza, se desbordó y luego cambió de cauce y atravesó la ciudad: un «desastre en cascada».'],['Volcán Calbuco, abril de 2015','Tras 54 años sin actividad relevante, los sismos precursores dieron menos de media hora de aviso. La columna llegó a 15 km y los lahares avanzaron hasta 15 km. Se evacuó a 7.585 personas dentro de un radio de 20 km. En Ensenada se acumularon hasta 25 cm de ceniza.']],
+  fx:()=>fRow('Por qué sube',`${I('E')} = ${I('ρ')}<sub>aire</sub> ${I('g')} ${I('V')}`,'','El empuje de Arquímedes, igual que en la sección Fluidos, pero el «líquido» es la atmósfera.')+fRow('Altura de la columna',`${I('Ṁ')} = 140 ${I('H')}<sup>4,14</sup>`,'<i>Ṁ</i> en kg/s y <i>H</i> en km (Mastin, 2014).','Relación empírica con mucha dispersión: para una misma altura, el material real puede ser varias veces mayor o menor. El dibujo de la columna es ilustrativo.')+fRow('Caída con roce del aire',`${I('v')}<sub>t</sub> = √(4${I('ρ')}${I('g')}${I('d')}/(3${I('C')}<sub>d</sub>${I('ρ')}<sub>aire</sub>))`,'','Para granos muy finos domina la viscosidad (ley de Stokes, <i>v</i> ∝ <i>d</i>²). El panel combina ambos regímenes de forma aproximada.'),do:'volcan'},
+ c_aluvion:{mk:()=>simAluvion(),cam:[2.5,2.8,0,.25,.2,22],msg:'Llueve. El agua llena los poros del suelo, levanta presión y le quita apoyo. Cuando el factor de seguridad baja de 1, la ladera se suelta. Mira la saturación con la que falla y cambia la pendiente.',
+  ev:[['Aluviones del norte, marzo de 2015','La lluvia del 24 al 27 de marzo, en una zona de extrema aridez, generó 18 aluviones de gran impacto. Dejaron 34 fallecidos, 4 desaparecidos y 31.586 damnificados.'],['Villa Santa Lucía, 16 de diciembre de 2017','Una pared de roca se deslizó sobre un glaciar y formó un aluvión con una velocidad promedio estimada de 72 km/h. Cubrió 90 hectáreas con 3 a 8 m de material y dejó 21 fallecidos y 1 desaparecido.'],['Río Las Minas, Punta Arenas, marzo de 2012','En cuatro días cayeron 55,8 mm. El desborde afectó 97 hectáreas y a unas 4.000 personas. No hizo falta un diluvio: importa cuánta agua cae y dónde.']],
+  fx:()=>fRow('Factor de seguridad (talud infinito)',`${I('FS')} = ${frac(I('c'),I('γ')+I('z')+' sen '+I('θ')+' cos '+I('θ'))} + (1 − ${frac(I('m')+I('γ')+'<sub>w</sub>',I('γ'))}) ${frac('tan '+I('φ'),'tan '+I('θ'))}`,'Aquí <i>c</i> = 5 kPa, <i>φ</i> = 32°, <i>γ</i> = 19 kN/m³ y <i>z</i> = 3 m (valores de ejemplo).','Compara lo que sostiene el suelo con lo que lo empuja. El agua no «lubrica»: la presión en los poros reduce la fuerza normal, y con ella el roce.')+fRow('Flujo (modelo de Voellmy)',`${I('a')} = ${I('g')}(sen ${I('θ')} − ${I('μ')} cos ${I('θ')}) − ${frac(I('g')+I('v')+'²',I('ξ')+I('z'))}`,'','Roce más una resistencia que crece con <i>v</i>², como el arrastre de la sección Dinámica. <i>ξ</i> = 500 m/s² es un valor típico.')+fRow('Por qué destruye',`${I('p')} = ½ ${I('ρ')} ${I('v')}²`,'A 72 km/h (20 m/s) y 1.900 kg/m³: unos 390 kPa.','Es una estimación simple, pero unas 39 toneladas por metro cuadrado explican lo que le pasa a una casa.'),do:'aluvion'},
+ c_incendio:{mk:()=>simIncendio(),cam:[2,1.8,0,.35,.7,19],msg:'El fuego calienta lo que tiene delante. En subida, las llamas quedan más cerca del combustible, y el viento las inclina aún más. Observa cómo se alarga el foco cuesta arriba y prueba con 70 km/h, el viento de Valparaíso 2014.',
+  ev:[['Valparaíso, abril de 2014','Con viento de 70 km/h, el fuego alcanzó los cerros poblados: 965 hectáreas, 2.900 viviendas destruidas y 15 fallecidos.'],['Incendios de 2017','Del 2 de enero al 10 de febrero hubo 1.028 incendios que consumieron más de 520 mil hectáreas. Dejaron 11 fallecidos y unas 2.000 viviendas destruidas.'],['Torres del Paine, 2011-2012','Más de 17.600 hectáreas, con rachas de más de 100 km/h y unas 2.500 hectáreas diarias al comienzo.'],['Viña del Mar, Quilpué y Valparaíso, febrero de 2024','10.022 hectáreas, 6.587 viviendas destruidas y 134 fallecidos. Se registraron temperaturas de 37,3 °C. Unas 21.000 personas estaban expuestas y evacuó el 99,4 %, con avisos locales y mensajes SAE.']],
+  fx:()=>fRow('Pendiente',`${I('R')} = ${I('R')}<sub>0</sub>·2<sup>${I('θ')}/10</sup>`,'','Regla de McArthur: la rapidez se duplica cada 10° de subida. Cuesta abajo, este modelo no baja de la mitad del valor en plano (CSIRO).')+fRow('Calor que se transfiere','Radiación y convección','','El fuego avanza porque calienta y seca el combustible de adelante. Por eso la pendiente y el viento, que acercan la llama, lo aceleran tanto.')+fRow('Regla 30-30-30','30 °C · 30 % · 30 km/h','','Más de 30 °C, humedad bajo 30 % y viento sobre 30 km/h. CONAF la usa como señal de alerta, pero no es necesaria para que ocurra un gran incendio.')+fRow('Modelo didáctico','Autómata celular','','El efecto del viento, de la humedad y de las pavesas está simplificado. Sirve para ver tendencias, no para predecir un incendio real.'),do:'incendio'}
+};
+const CHI_DO={sismo:['Ubícate en un lugar de protección, lejos de ventanas, bajo un elemento firme.','Corta la electricidad y cierra las llaves de agua y gas.','Para salir de un edificio usa las escaleras, nunca el ascensor.','Si estás en la costa y hay alerta de tsunami, evacúa de inmediato.'],
+ tsunami:['Con alerta o alarma, evacúa a la zona de seguridad: 30 m sobre el nivel del mar, o a más de 1 km de la costa según el lugar.','No esperes a ver la ola y no vuelvas tras la primera: las olas pueden seguir llegando hasta por 24 horas.','Revisa antes tu ruta en el Visor Chile Preparado de SENAPRED.'],
+ volcan:['En zona de riesgo, prepárate para evacuar cuando la autoridad lo indique.','Con ceniza, cierra ventanas y ductos. Afuera, cubre nariz y boca con una mascarilla o un paño húmedo.','Aléjate de fondos de valle y no cruces quebradas ni ríos: pueden bajar lahares.'],
+ aluvion:['Las señales: lluvia fuerte y sostenida, y un ruido de fondo como de muchos camiones.','Aléjate de ríos, esteros y quebradas. Si no alcanzas un punto de encuentro, sube a las zonas altas de una estructura.','Si vas en vehículo, no cruces una zona afectada.'],
+ incendio:['Sigue las instrucciones de los equipos de respuesta y aléjate del fuego y del humo.','SENAPRED recomienda evacuar a pie: los vehículos generan congestión y accidentes.','No vuelvas a la zona quemada sin autorización: el fuego puede reactivarse.']};
+const CHI_TL=[[1960,'Terremoto y tsunami de Valdivia','c_subduccion','9,5 · 1.600 fallecidos'],[1985,'Terremoto de Algarrobo','c_magnitud','8 Mw · 177 fallecidos'],[2008,'Erupción del volcán Chaitén','c_volcan','columna de más de 20 km · sin víctimas'],[2010,'Terremoto y tsunami del 27F','c_subduccion','8,8 · 521 fallecidos, 56 desaparecidos'],[2011,'Incendio de Torres del Paine','c_incendio','más de 17.600 ha'],[2012,'Desborde del río Las Minas','c_aluvion','97 ha · 4.000 afectados'],[2014,'Incendio de Valparaíso','c_incendio','965 ha · 15 fallecidos'],[2015,'Aluviones del norte','c_aluvion','34 fallecidos, 4 desaparecidos'],[2015,'Erupción del volcán Calbuco','c_volcan','columna de 15 km · 7.585 evacuados'],[2015,'Terremoto y tsunami de Illapel','c_tsunami','8,4 · 15 fallecidos, 1 desaparecido'],[2017,'Incendios forestales','c_incendio','más de 520 mil ha · 11 fallecidos'],[2017,'Aluvión de Villa Santa Lucía','c_aluvion','21 fallecidos, 1 desaparecido'],[2024,'Incendios de Viña, Quilpué y Valparaíso','c_incendio','10.022 ha · 134 fallecidos']];
+function chiLoad(name){ const D=CHI_SCENES[name]; CHI.key=name; CHI.s=D.mk(); chiCam(...D.cam); $('#paneForm')._h=null; return D.msg+(innerWidth<820?' Abre el panel ▤ y elige «Contexto» para ver qué pasó en Chile.':''); }
+function chiPane(){ const D=CHI_SCENES[CHI.key]; if(!D) return '';
+  return `<h3>Qué pasó en Chile</h3>`+D.ev.map(([t,x])=>`<div class="chi-ev"><b>${t}</b><p class="note">${x}</p></div>`).join('')+`<h3>La física detrás</h3>`+D.fx()+`<h3>Qué hacer (SENAPRED)</h3><ul class="chi-do">${CHI_DO[D.do].map(x=>`<li>${x}</li>`).join('')}</ul><p class="note">Resumen de las recomendaciones de <a href="https://senapred.cl/" target="_blank" rel="noopener">senapred.cl</a>. Ante una emergencia real, sigue siempre a la autoridad.</p>`+
+  `<h3>Línea de tiempo</h3><div class="chi-tl">${CHI_TL.map(([y,n,sc,x])=>`<button data-chi="${sc}"${sc===CHI.key?' class="on"':''}><span class="y">${y}</span><span class="n">${n}<small>${x}</small></span></button>`).join('')}</div><p class="note">Datos: <a href="https://desastresenlamemoria.cl/" target="_blank" rel="noopener">Desastres en la Memoria</a>, SENAPRED, que recopila hasta 2024. Es una selección, no la lista completa de desastres de Chile.</p>`; }
+
+function chiHUD(){ if(CHI.s&&CHI.s.hud) CHI.s.hud(); }
+function chiDraw(){ if(CHI.s&&CHI.s.draw) CHI.s.draw(); }
+$('#paneForm').addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-chi]'); if(b) loadScene(b.dataset.chi); });
 
 /* ===================== bucle ===================== */
 let last=performance.now(), accT=0;
@@ -3790,7 +3988,7 @@ let wakeT=0, editT=0, lastDraw=-1e9, nDraw=0; const _camP=V(), _camQ=new THREE.Q
 function wake(e){ wakeT=performance.now(); if(!e||(e.type!=='pointermove'&&e.type!=='wheel')) editT=wakeT; }
 ['pointerdown','pointermove','wheel','keydown','input','change','click','touchstart','resize'].forEach(e=>addEventListener(e,wake,{capture:true,passive:true}));
 const anyKey=()=>{ for(const k in keys) if(keys[k]) return true; for(const k in tKeys) if(tKeys[k]) return true; return false; };
-function simQuiet(){ if(chains.length||planets.length||movers.length) return false;
+function simQuiet(){ if(CHI.s&&CHI.s.live!==false) return false; if(chains.length||planets.length||movers.length) return false;
   for(const b of bodies){ if(b.vel.lengthSq()>1e-6||(b.w&&b.w.lengthSq()>1e-6)) return false; }
   for(const T of turntables) if(Math.abs(T.omega||0)>1e-4) return false; for(const B of beams) if(Math.abs(B.omega||0)>1e-4) return false; return true; }
 function frame(now){

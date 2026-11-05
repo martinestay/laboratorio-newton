@@ -16,11 +16,13 @@ El nombre viene de los *Philosophiæ Naturalis Principia Mathematica*, la obra d
 | Gravitación y órbitas | 7 |
 | Fluidos | 6 |
 | Sistemas de referencia | 5 |
+| Chile: desastres naturales | 7 |
 
-Algunos escenarios aparecen en más de una sección; en total son 69 distintos. Además:
+Algunos escenarios aparecen en más de una sección; en total son 76 distintos. Además:
 
 - **53 objetos** en un inventario tipo Minecraft, con una barra propia para cada sección.
-- **38 desafíos:** el juego te da los datos, tú calculas el resultado y la simulación lo comprueba.
+- **42 desafíos:** el juego te da los datos, tú calculas el resultado y la simulación lo comprueba.
+- **Una sección sobre Chile:** terremotos, tsunamis, volcanes, aluviones e incendios, cada uno con una maqueta que se simula, lo que ocurrió y qué recomienda hacer SENAPRED. Las cifras vienen de [Desastres en la Memoria](https://desastresenlamemoria.cl/), de SENAPRED.
 - **Dos modos:** Básico (física sin cálculo) y Avanzado (derivadas, integrales, aire, cuerdas elásticas y métodos numéricos).
 - **Herramientas de estudio:** diagramas de cuerpo libre, gráficos, fórmulas con los valores reemplazados, calculadora y referencias bibliográficas.
 
@@ -106,4 +108,6 @@ Todavía no tiene una licencia definida. Mientras no se agregue una, quien lo vi
 
 ## Créditos
 
-Creado por Martín Estay Valdés con la ayuda de Claude Opus 5.5, de Anthropic. Las fuentes de la física están en la pestaña **Referencias** del juego.
+Creado por Martín Estay Valdés con la ayuda de Claude Opus 5.5, de Anthropic. Las fuentes de la física y de los datos de Chile están en la pestaña **Referencias** del juego.
+
+Los modelos de la sección Chile son didácticos: explican la física, pero no predicen eventos reales. Ante una emergencia, sigue siempre las indicaciones de la autoridad.
