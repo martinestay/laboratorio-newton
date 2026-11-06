@@ -373,6 +373,41 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
 }
 @media (max-height:520px) and (min-width:560px) and (max-width:819px){ body.sideopen #inv{right:calc(min(380px,50%) + 16px)} }
 @media (prefers-reduced-motion:reduce){#toast,.sw-row input,.sw-row input:after{transition:none}}
+
+/* «Qué mirar»: la explicación del escenario queda fija hasta cambiar de escenario; arriba, la barra de la primera clase */
+#lesson{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:58px;width:min(440px,calc(100% - 24px));z-index:4;display:flex;flex-direction:column;gap:8px;max-height:max(170px,calc(100% - 480px));min-height:0;pointer-events:none}
+#lesson>*{pointer-events:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);box-sizing:border-box}
+#tourBar{flex:none;border-color:var(--accent);padding:8px 10px}
+#tourBar .tour-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#tourBar .chip{color:var(--accent)}
+#tourN{font:600 12px var(--mono)}
+#tourName{font-weight:600}
+#tourBar .btnrow{margin:8px 0 0}
+#qm{padding:6px 8px 10px 12px;min-height:0;overflow:auto;line-height:1.5;font-size:13px}
+#qm .ph .h{font:700 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+#qm .ph .h b{color:var(--muted);letter-spacing:.04em;text-transform:none;font-size:12px}
+#qmC{padding-right:4px}
+#qmC i{font-family:var(--math);font-size:14px}
+#qm kbd{font:500 11px var(--mono);color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:4px;padding:0 5px}
+.qm-grav{display:none;margin:8px 4px 0 0;padding-top:8px;border-top:1px dashed var(--line2);color:var(--muted);font-size:12px}
+body[data-sec="grav"] .qm-grav{display:block}
+#qm[hidden],#tourBar[hidden]{display:none!important}
+body.off-qm #qm,body.chal-on #qm,body.cine #lesson{display:none!important}
+.help-go{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+@media (max-width:819px){
+  #lesson{top:calc(104px + env(safe-area-inset-top,0px));right:calc(66px + env(safe-area-inset-right,0px));width:auto;max-height:36%}
+  body.off-inv #lesson{top:calc(56px + env(safe-area-inset-top,0px))}
+  body.sidebig.sideopen #lesson{display:none!important}
+  #qm{font-size:12.5px}
+}
+@media (max-height:520px) and (min-width:560px){
+  #lesson{left:auto;right:max(12px,env(safe-area-inset-right,0px));top:56px;width:min(400px,44%);max-height:calc(100% - 190px)}
+  body.sideopen #lesson{display:none!important}
+}
+@media (max-height:520px) and (min-width:560px) and (max-width:819px){
+  #lesson{right:calc(66px + env(safe-area-inset-right,0px));top:calc(104px + env(safe-area-inset-top,0px));max-height:calc(100% - 230px)}
+  body.off-inv #lesson{top:calc(56px + env(safe-area-inset-top,0px));max-height:calc(100% - 180px)}
+}
 </style>
 </head>
 <body>
@@ -385,7 +420,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
     <div class="brand"><span class="eqmark">ΣF = m·a</span><b>Principia</b></div>
     <select id="secSel" title="Sección" aria-label="Sección">
       <option value="din">Dinámica</option><option value="ene">Energía y trabajo</option><option value="mom">Cantidad de movimiento</option><option value="rot">Rotación y momento angular</option>
-      <option value="grav">Gravitación y órbitas</option><option value="flu">Fluidos</option><option value="ond">Ondas y oscilaciones</option><option value="ref">Sistemas de referencia</option><option value="chi">Chile: desastres naturales</option>
+      <option value="grav">Gravitación y órbitas</option><option value="flu">Hidrostática</option><option value="ond">Ondas y oscilaciones</option><option value="ref">Sistemas de referencia</option><option value="chi">Chile: desastres naturales</option>
     </select>
     <div class="seg" id="modeSeg" role="group" aria-label="Modo">
       <button id="mBasic" data-mode="basic" class="on">Básico</button><button id="mAdv" data-mode="adv">Avanzado</button>
@@ -435,7 +470,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
         <option value="o_danza">Danza de péndulos</option>
         <option value="o_masas">Masa y período del resorte</option>
        </optgroup>
-       <optgroup label="Fluidos" data-sec="flu">
+       <optgroup label="Hidrostática" data-sec="flu">
         <option value="f_flotar">¿Flota o se hunde?</option>
         <option value="f_arquimedes">Peso aparente (dinamómetro)</option>
         <option value="f_presion">Presión y profundidad</option>
@@ -505,6 +540,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
       <button id="bCam" title="Cámara (V)">3ª persona</button>
       <button id="bPanel" title="Mostrar u ocultar el panel" aria-label="Panel">Panel</button>
       <button id="bView" title="Elegir qué cuadros se ven" aria-label="Vista" aria-haspopup="true">Vista</button>
+      <button id="bTour" title="Recorrido guiado de cuatro escenas">Primera clase</button>
       <button id="bHelp" title="Controles">?</button>
     </div>
   </header>
@@ -614,7 +650,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
       <canvas class="cv" id="gcv" height="400" style="height:400px"></canvas>
       <p class="note basic-only">Pasa el mouse sobre los gráficos. La <b>pendiente</b> de la posición es la velocidad, y el <b>área</b> bajo la velocidad es el desplazamiento.</p>
       <p class="note adv-only">Pasa el mouse: en <i>x</i>(<i>t</i>) se dibuja la recta tangente (derivada d<i>x</i>/d<i>t</i>) y en <i>v</i>(<i>t</i>) y <i>a</i>(<i>t</i>) se sombrea la integral desde el inicio.</p>
-      <div class="btnrow"><button id="gReset">Reiniciar registro</button></div>
+      <div class="btnrow"><button id="gReset">Reiniciar registro</button><button data-png="gcv">Descargar PNG</button></div>
     </div>
 
     <div class="pane" data-pane="calc" hidden>
@@ -658,7 +694,7 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
       <h3>Datos usados</h3>
       <p class="note">Roce lateral de neumáticos de ejemplo: asfalto seco 0,8; mojado 0,5; hielo 0,1. Gravedad superficial: Tierra 9,81; Luna 1,62; Marte 3,71; Júpiter 24,79 m/s². Densidad del aire a nivel del mar y 15 °C: 1,225 kg/m³. Coeficientes de arrastre típicos: esfera 0,47; cubo 1,05; auto ≈ 0,3. Los coeficientes de roce son valores de ejemplo y se pueden cambiar.</p>
       <h3>Cómo modela el juego</h3>
-      <p class="note">Cada objeto es una partícula (modelo de punto material) con forma para los choques. En cada paso Δ<i>t</i> se suman las fuerzas (peso, normal, roce de Coulomb, tensión, arrastre, motor y empuje), se calcula <i>a</i> = Σ<i>F</i>/<i>m</i> y se integra numéricamente. Las cuerdas ideales se resuelven como restricción de longitud constante. Los resortes siguen la ley de Hooke (más un amortiguador lineal en modo avanzado) y el hilo del péndulo es una restricción de largo máximo <i>L</i>: tira solo cuando está tenso. Los balancines son cuerpos rígidos que giran en un plano vertical alrededor del fulcro con Σ<i>τ</i> = <i>Iα</i>; los objetos encima transmiten su normal y su roce como cargas, y su masa se suma al momento de inercia. En las curvas, la normal y el roce lateral de los neumáticos se calculan para producir la aceleración centrípeta <i>v</i>²/<i>r</i>; si el roce necesario supera <i>μN</i>, el auto derrapa. Los objetos sobre un disco giratorio sienten la aceleración del punto donde se apoyan. Los choques se resuelven con impulsos y coeficiente de restitución. Los bloques comunes son partículas. Las cajas rígidas y los cilindros son cuerpos rígidos en 3D: tienen orientación, velocidad angular y tensor de inercia, siguen las ecuaciones de Euler y cada contacto (esquina o borde) recibe su normal y su roce de Coulomb mediante impulsos, así que el torque los hace girar, volcarse y rodar. Una cuerda o un resorte enganchado a un cuerpo rígido tira desde un punto de su superficie (en los cilindros, desde el eje), por lo que también produce torque; la cuerda ideal es una restricción que se resuelve junto con los contactos. Sobre un balancín, la tabla entra al mismo solver como un cuerpo que solo puede girar en torno al fulcro; sobre un disco giratorio, la superficie se mueve con <i>v</i> = <i>ω</i> × <i>r</i>. Contra cada superficie el roce de un cuerpo rígido se resuelve por parche (una fuerza en el centroide con tope <i>μ</i>Σ<i>N</i>, más roce de torsión), así el umbral de deslizamiento es exactamente <i>μ</i> veces la normal total. Un hilo enrollado sale del eje por el punto tangente: el punto material del eje que está ahí no puede alejarse del anclaje (<i>v</i><sub>P</sub>·<i>u</i> ≥ 0), y el largo libre crece solo cuando el cilindro gira; al final del hilo el nudo queda fijo en el eje, el yo-yo da media vuelta en torno a él y se enrolla por el otro lado. La orientación de los cuerpos rígidos se integra girando exactamente el ángulo |<i>ω</i>|Δ<i>t</i> y conservando <i>L</i> = <i>Iω</i> durante el giro (así un giróscopo rápido precesa sin desviarse). Secciones: en Gravitación la fuerza de cada planeta es <i>GMm</i>/<i>r</i>²; en Fluidos el empuje es <i>ρgV</i><sub>sum</sub> con el volumen sumergido de cada cuerpo; en Ondas la cuerda son cuentas unidas por resortes de largo natural cero (ecuación de onda lineal); en Sistemas de referencia la física siempre se calcula desde el suelo y la cámara puede ir con el sistema que acelera o gira, dibujando las fuerzas ficticias.</p>
+      <p class="note">Cada objeto es una partícula (modelo de punto material) con forma para los choques. En cada paso Δ<i>t</i> se suman las fuerzas (peso, normal, roce de Coulomb, tensión, arrastre, motor y empuje), se calcula <i>a</i> = Σ<i>F</i>/<i>m</i> y se integra numéricamente. Las cuerdas ideales se resuelven como restricción de longitud constante. Los resortes siguen la ley de Hooke (más un amortiguador lineal en modo avanzado) y el hilo del péndulo es una restricción de largo máximo <i>L</i>: tira solo cuando está tenso. Los balancines son cuerpos rígidos que giran en un plano vertical alrededor del fulcro con Σ<i>τ</i> = <i>Iα</i>; los objetos encima transmiten su normal y su roce como cargas, y su masa se suma al momento de inercia. En las curvas, la normal y el roce lateral de los neumáticos se calculan para producir la aceleración centrípeta <i>v</i>²/<i>r</i>; si el roce necesario supera <i>μN</i>, el auto derrapa. Los objetos sobre un disco giratorio sienten la aceleración del punto donde se apoyan. Los choques se resuelven con impulsos y coeficiente de restitución. Los bloques comunes son partículas. Las cajas rígidas y los cilindros son cuerpos rígidos en 3D: tienen orientación, velocidad angular y tensor de inercia, siguen las ecuaciones de Euler y cada contacto (esquina o borde) recibe su normal y su roce de Coulomb mediante impulsos, así que el torque los hace girar, volcarse y rodar. Una cuerda o un resorte enganchado a un cuerpo rígido tira desde un punto de su superficie (en los cilindros, desde el eje), por lo que también produce torque; la cuerda ideal es una restricción que se resuelve junto con los contactos. Sobre un balancín, la tabla entra al mismo solver como un cuerpo que solo puede girar en torno al fulcro; sobre un disco giratorio, la superficie se mueve con <i>v</i> = <i>ω</i> × <i>r</i>. Contra cada superficie el roce de un cuerpo rígido se resuelve por parche (una fuerza en el centroide con tope <i>μ</i>Σ<i>N</i>, más roce de torsión), así el umbral de deslizamiento es exactamente <i>μ</i> veces la normal total. Un hilo enrollado sale del eje por el punto tangente: el punto material del eje que está ahí no puede alejarse del anclaje (<i>v</i><sub>P</sub>·<i>u</i> ≥ 0), y el largo libre crece solo cuando el cilindro gira; al final del hilo el nudo queda fijo en el eje, el yo-yo da media vuelta en torno a él y se enrolla por el otro lado. La orientación de los cuerpos rígidos se integra girando exactamente el ángulo |<i>ω</i>|Δ<i>t</i> y conservando <i>L</i> = <i>Iω</i> durante el giro (así un giróscopo rápido precesa sin desviarse). Secciones: en Gravitación la fuerza de cada planeta es <i>GMm</i>/<i>r</i>²; en Hidrostática el empuje es <i>ρgV</i><sub>sum</sub> con el volumen sumergido de cada cuerpo; en Ondas la cuerda son cuentas unidas por resortes de largo natural cero (ecuación de onda lineal); en Sistemas de referencia la física siempre se calcula desde el suelo y la cámara puede ir con el sistema que acelera o gira, dibujando las fuerzas ficticias.</p>
       <p class="credit">Creado por Martín Estay Valdés con la ayuda de Claude Opus 5.5, de Anthropic.</p>
     </div>
   </aside>
@@ -674,6 +710,17 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
   </div>
   <div id="ro" hidden><button class="px" data-close="data" title="Ocultar datos" aria-label="Ocultar datos">×</button><div id="roC"></div></div>
   <div id="eb" hidden><div class="ph"><div class="h" id="ebh"></div><button class="px" data-close="data" title="Ocultar este cuadro" aria-label="Ocultar este cuadro">×</button></div><div id="ebxC"></div><canvas id="ebc"></canvas><div id="ebx"></div></div>
+  <div id="lesson">
+    <div id="tourBar" hidden role="region" aria-label="Primera clase">
+      <div class="tour-h"><span class="chip">Primera clase</span><span id="tourN"></span><span id="tourName"></span></div>
+      <div class="btnrow"><button id="tourPrev">Anterior</button><button class="primary" id="tourNext">Siguiente</button><button id="tourExit">Salir y explorar</button></div>
+    </div>
+    <div id="qm" hidden role="region" aria-label="Qué mirar">
+      <div class="ph"><div class="h" id="qmH">Qué mirar</div><button class="px" data-close="qm" title="Ocultar «Qué mirar»" aria-label="Ocultar «Qué mirar»">×</button></div>
+      <div id="qmC"></div>
+      <p class="qm-grav">Planeta de juguete: los radios son de unos metros a propósito. <i>F</i> = <i>GMm</i>/<i>r</i>² y las leyes de Kepler son las mismas que en la Tierra.</p>
+    </div>
+  </div>
   <div id="hint"><span id="hintC"></span><button class="px" data-close="hint" title="Ocultar indicaciones" aria-label="Ocultar indicaciones">×</button></div>
   <div id="dock" aria-label="Cuadros ocultos"></div>
   <div id="touch" hidden aria-label="Controles táctiles">
@@ -694,13 +741,15 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
   <div id="menu" hidden role="dialog" aria-label="Vista">
     <h4>Mostrar en pantalla</h4>
     <label class="sw-row"><span>Barra de objetos</span><input type="checkbox" data-ui="inv"></label>
+    <label class="sw-row"><span>Qué mirar<small>La explicación del escenario</small></span><input type="checkbox" data-ui="qm"></label>
+    <label class="sw-row"><span>Personaje<small>Apagado: solo observas; la cámara sigue igual</small></span><input type="checkbox" data-ui="avatar"></label>
     <label class="sw-row"><span>Panel lateral<small>Objeto, Mundo, Fórmulas, Gráficos…</small></span><input type="checkbox" data-ui="side"></label>
     <label class="sw-row"><span>Cuadro de datos y gráfico<small>Datos del objeto o el gráfico de la sección</small></span><input type="checkbox" data-ui="data"></label>
     <label class="sw-row"><span>Etiquetas en la escena<small>Valores junto a los vectores</small></span><input type="checkbox" data-ui="labels"></label>
     <label class="sw-row"><span>Mensajes emergentes</span><input type="checkbox" data-ui="toast"></label>
     <label class="sw-row"><span>Indicaciones de teclas</span><input type="checkbox" data-ui="hint"></label>
     <label class="sw-row touch-only"><span>Controles táctiles</span><input type="checkbox" data-ui="touch"></label>
-    <div class="btnrow"><button id="cineBtn">Ocultar todo (H)</button></div>
+    <div class="btnrow"><button id="cineBtn">Ocultar todo (H)</button><button id="linkBtn" title="Copia un enlace con este escenario, el modo, g, el roce y e">Copiar enlace</button></div>
     <h4>Rendimiento</h4>
     <div class="seg qseg" id="qSeg" role="group" aria-label="Rendimiento"><button data-q="eco">Ahorro</button><button data-q="normal">Normal</button><button data-q="alta">Alta</button></div>
     <p class="note" id="qNote"></p>
@@ -730,12 +779,13 @@ body.touch #inv{bottom:calc(60px + env(safe-area-inset-bottom,0px))}
       </div>
       <p><b>Desafíos</b> (pestaña del panel): el juego te da datos, tú calculas el resultado y después la simulación lo comprueba.</p>
       <p><b>Básico</b>: física sin cálculo, con supuestos de texto (sin aire, cuerdas ideales). <b>Avanzado</b>: derivadas, integrales, aire, cuerdas elásticas que se rompen y métodos numéricos.</p>
-      <button class="primary" id="helpGo">Empezar</button>
+      <p><b>Primera clase</b>: cuatro escenas guiadas (misma fuerza y distinta masa, tres rampas, máquina de Atwood y un choque elástico), con la explicación fija en pantalla.</p>
+      <div class="help-go"><button class="primary" id="helpTour">Primera clase</button><button id="helpGo">Explorar libre</button></div>
     </div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="three.min.js"></script>
 <script>if(!window.THREE){ document.querySelector('#help .card').innerHTML='<h1>ΣF = m·a</h1><h2>No se pudo cargar el motor 3D</h2><p>Revisa tu conexión a internet y vuelve a cargar la página.</p>'; }</script>
 <script>
 'use strict';
@@ -1666,6 +1716,7 @@ function collidePlayer(obs){
 function updatePlayer(dt){
   for(const b of bodies){ b.pushVec=null; b.pushPoint=null; }
   if(S.section==='grav'||sceneCam||(S.section==='ref'&&(movers.length||turntables.length))){ player.mesh.visible=false; return; }
+  if(!UI.avatar){ player.mesh.visible=false; player.pushing=null; return; }   // modo observador
   const typing=document.activeElement&&/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
   const k=typing?{}:Object.assign({},keys,tKeys);
   if(player.inCar){ const c=player.inCar; const vh=c.vh||0;
@@ -1837,7 +1888,7 @@ function renderBag(){ const q=$('#bagSearch').value.trim().toLowerCase(), sec=S.
     h+=`<div class="bag-cat">${c}</div><div class="bag-row">`+L.map(it=>`<button class="bitem${bar.includes(it.id)?' inbar':''}" data-item="${it.id}"><svg viewBox="0 0 30 24">${it.svg}</svg><span>${it.n}</span></button>`).join('')+'</div>'; }
   $('#bagGrid').innerHTML=h||'<p class="note">No hay objetos con ese nombre.</p>';
   $('#bagBar').innerHTML=bar.map((id,i)=>{ const it=id&&ITEM[id]; return `<button class="slot${i===bagSel?' on':''}" data-bslot="${i}" title="${it?it.n:'Vacía'}" aria-label="Casilla ${i+1}: ${it?it.n:'vacía'}"><kbd>${i+1}</kbd>${it?`<svg viewBox="0 0 30 24">${it.svg}</svg>`:''}</button>`; }).join(''); }
-function itemInfo(id){ const it=ITEM[id]; if(!it) return; const SN={din:'Dinámica',ene:'Energía',mom:'Cantidad de movimiento',rot:'Rotación',grav:'Gravitación',flu:'Fluidos',ond:'Ondas',ref:'Referencia',chi:'Chile'};
+function itemInfo(id){ const it=ITEM[id]; if(!it) return; const SN={din:'Dinámica',ene:'Energía',mom:'Cantidad de movimiento',rot:'Rotación',grav:'Gravitación',flu:'Hidrostática',ond:'Ondas',ref:'Referencia',chi:'Chile'};
   $('#bagInfo').innerHTML=`<b>${it.n}</b> · ${it.d||''}<br>Sirve en: ${it.secs.length>=7?'casi todas las secciones':it.secs.map(x=>SN[x]).join(', ')}.`; }
 $$('.bag-tabs button').forEach(b=>b.onclick=()=>{ bagTab=b.dataset.bt; renderBag(); });
 $('#bagSearch').addEventListener('input',renderBag);
@@ -1966,8 +2017,8 @@ addEventListener('keydown',ev=>{
   if(ev.code==='KeyH') toggleCine();
   if(ev.code==='KeyP') togglePause();
   if(ev.code==='KeyV') toggleCam();
-  if(ev.code==='KeyF'&&!player.inCar) kick();
-  if(ev.code==='KeyR') carToggle();
+  if(ev.code==='KeyF'&&!player.inCar&&UI.avatar) kick();
+  if(ev.code==='KeyR'&&UI.avatar) carToggle();
   if((ev.code==='Delete'||ev.code==='Backspace')&&sel) removeEnt(sel);
 });
 // teclas trabadas: en Mac, con Cmd apretado no llega el keyup de las otras teclas; tampoco si el foco salta a un menú o campo
@@ -2139,12 +2190,12 @@ function fluOverlay(){ const T=tanks[0]; if(!T) return; for(let d=0.5;d<=T.yw+1e
   const b=sel&&sel.isBody?sel:null; if(!pRuler){ pRuler=new THREE.Line(new THREE.BufferGeometry().setFromPoints([V(),V()]),new THREE.LineDashedMaterial({color:0x7fd0ff,dashSize:0.1,gapSize:0.07})); pRuler.renderOrder=19; scene.add(pRuler); OV.push(pRuler); }
   if(b&&b.inTank&&b.pos.y<T.yw){ const p=pRuler.geometry.attributes.position; p.setXYZ(0,b.pos.x,T.yw,b.pos.z); p.setXYZ(1,b.pos.x,b.pos.y,b.pos.z); p.needsUpdate=true; pRuler.computeLineDistances(); pRuler.geometry.computeBoundingSphere(); pRuler.visible=true;
     const h=T.yw-b.pos.y; label(V(b.pos.x,(b.pos.y+T.yw)/2,b.pos.z),`<i>h</i> = ${fmt(h)} m · <i>p</i> − <i>p</i><sub>0</sub> = <i>ρgh</i> = ${fmt(S.rhoF*PP.g*h/1000,2)} kPa`,'#7fd0ff',rightV(),true); } }
-function fluHUD(b){ if(!b) return hudHTML('Fluidos · <i>E</i> = <i>ρ</i><sub>líq</sub> <i>g V</i><sub>sum</sub>','<p class="note">Selecciona un objeto.</p>');
+function fluHUD(b){ if(!b) return hudHTML('Hidrostática · <i>E</i> = <i>ρ</i><sub>líq</sub> <i>g V</i><sub>sum</sub>','<p class="note">Selecciona un objeto.</p>');
   const Vb=bodyVol(b), rb=b.m/Vb, Vs=b.inTank?subVol(b,b.inTank):0, Eb=S.rhoF*PP.g*Vs, P=b.m*PP.g, spr=linksOf(b).find(l=>l.kind==='spring');
   let h=`<dl class="kv2"><dt>densidad del objeto</dt><dd>${fmt(b.m)} kg / ${fmt(Vb,4)} m³ = ${fmt(rb,0)} kg/m³</dd><dt>densidad del líquido</dt><dd>${fmt(S.rhoF,0)} kg/m³ → ${rb<S.rhoF?'<span class="ok">flota</span>':'<span class="bad">se hunde</span>'}</dd>
     <dt>volumen sumergido</dt><dd>${fmt(Vs,4)} m³ (${fmt(100*Vs/Vb,1)} %)</dd><dt>empuje <i>E</i></dt><dd>${fmt(Eb)} N</dd><dt>peso <i>P</i></dt><dd>${fmt(P)} N</dd><dt>peso aparente <i>P</i> − <i>E</i></dt><dd>${fmt(P-Eb)} N</dd>`;
   if(spr) h+=`<dt>dinamómetro marca</dt><dd>${fmt(Math.abs(spr.k*(spr.len-spr.l0)))} N</dd>`;
-  hudHTML('Fluidos · <i>E</i> = <i>ρ</i><sub>líq</sub> <i>g V</i><sub>sum</sub>',h+'</dl>'); }
+  hudHTML('Hidrostática · <i>E</i> = <i>ρ</i><sub>líq</sub> <i>g V</i><sub>sum</sub>',h+'</dl>'); }
 function fluFormulas(b,E){ let h=''; const Vb=bodyVol(b), rb=b.m/Vb, Vs=b.inTank?subVol(b,b.inTank):0, g=E.g, T=b.inTank;
   h+=fRow('Densidad',`${I('ρ')} = ${frac(I('m'),I('V'))}`,`${fmt(b.m)}/${fmt(Vb,4)} = ${fmt(rb,0)} kg/m³ · líquido: ${fmt(S.rhoF,0)} kg/m³`,'Flota todo lo que es menos denso que el líquido, sin importar cuánto pese.');
   if(T&&b.pos.y<T.yw) h+=fRow('Presión hidrostática',`${I('p')} = ${I('p')}<sub>0</sub> + ${I('ρ')}${I('g')}${I('h')}`,`a <i>h</i> = ${fmt(T.yw-b.pos.y)} m de profundidad: <i>p</i> − <i>p</i><sub>0</sub> = ${fmt(S.rhoF)}·${fmt(g)}·${fmt(T.yw-b.pos.y)} = ${fmt(S.rhoF*g*(T.yw-b.pos.y))} Pa`,'Solo depende de la profundidad, no de la forma del recipiente. Las marcas en la pared muestran la presión manométrica.');
@@ -2332,25 +2383,31 @@ function updateVisuals(dt){
 
 /* ===================== UI ===================== */
 // interfaz: qué cuadros se ven (cada uno se cierra con su ×) y el menú Vista; se recuerda en este navegador
-const UI={inv:true,side:true,data:true,hint:true,toast:true,touch:true,q:'normal',hot:{}};
+const UI={inv:true,side:true,data:true,hint:true,toast:true,touch:true,qm:true,avatar:true,q:'normal',hot:{}};   // tour: 'done' | 'skip' cuando ya se terminó o saltó la primera clase
 try{ Object.assign(UI,JSON.parse(localStorage.getItem('ln-ui')||'{}')); }catch(e){}
 if(UI.qv!==2){ UI.q='normal'; UI.qv=2; }
+if(UI.tourPrev){ Object.assign(UI,UI.tourPrev); delete UI.tourPrev; }   // la primera clase quedó a medias: vuelve la vista que tenía la persona
 let cine=null, idle=false, shadowDirty=true;   // idle: la escena está quieta y no se redibuja   // H: oculta todo y después lo deja como estaba
 function uiSave(){ if(cine) return; try{ localStorage.setItem('ln-ui',JSON.stringify(UI)); }catch(e){} }
 function setSide(on){ $('#side').hidden=!on; document.body.classList.toggle('sideopen',on); $('#bPanel').classList.toggle('on',on); if(on&&typeof uiTick==='function') uiTick(true); }
 function uiApply(){ const B=document.body.classList;
-  B.toggle('off-inv',!UI.inv); B.toggle('off-data',!UI.data); B.toggle('off-hint',!UI.hint); B.toggle('off-touch',!UI.touch); B.toggle('cine',!!cine);
+  B.toggle('off-inv',!UI.inv); B.toggle('off-data',!UI.data); B.toggle('off-hint',!UI.hint); B.toggle('off-touch',!UI.touch); B.toggle('off-qm',!UI.qm); B.toggle('cine',!!cine);
   if(!UI.toast) $('#toast').hidden=true;
   $$('#menu [data-ui]').forEach(i=>{ const k=i.dataset.ui; i.checked=k==='side'?!$('#side').hidden:k==='labels'?!!S.labels:!!UI[k]; });
   $$('#qSeg button').forEach(b=>b.classList.toggle('on',b.dataset.q===UI.q)); $('#qNote').textContent=Q_NOTE[UI.q]||'';
   $('#cineBtn').textContent=cine?'Mostrar todo de nuevo (H)':'Ocultar todo (H)'; uiDock(); }
 function uiDock(){ const d=$('#dock'), D=SECS[S.section], p=[];
-  if(!UI.inv) p.push(['inv','Barra de objetos']); if(!UI.data&&(D.hud||(sel&&sel.isBody))) p.push(['data',D.hud?'Cuadro de '+D.n.toLowerCase():'Datos del objeto']);
+  if(!UI.qm&&QM.html&&!document.body.classList.contains('chal-on')) p.push(['qm','Qué mirar']); if(!UI.inv) p.push(['inv','Barra de objetos']); if(!UI.data&&(D.hud||(sel&&sel.isBody))) p.push(['data',D.hud?'Cuadro de '+D.n.toLowerCase():'Datos del objeto']);
   const h=p.map(([k,t])=>`<button data-open="${k}">＋ ${t}</button>`).join(''); if(d._h!==h){ d.innerHTML=h; d._h=h; } }
 function uiSet(k,v){ if(cine){ cine=null; document.body.classList.remove('cine'); }
-  if(k==='side'){ UI.side=v; setSide(v); } else if(k==='labels'){ S.labels=v; syncK('labels'); } else UI[k]=v; uiSave(); uiApply(); }
+  if(k==='side'){ UI.side=v; setSide(v); } else if(k==='labels'){ S.labels=v; syncK('labels'); } else { UI[k]=v; if(k==='avatar') avatarApply(); } uiSave(); uiApply(); }
+// modo observador: sin personaje no se camina ni se empuja; la cámara, el zoom y la pausa siguen igual
+function avatarApply(){ if(!UI.avatar){ if(player.inCar) exitCar(); player.pushing=null; resetPlayerMotion(); player.mesh.visible=false; } else player.mesh.visible=camMode==='third'&&!player.inCar; }
+// «Qué mirar»: el texto del escenario (msg) queda fijo hasta cambiar de escenario
+const QM={html:''};
+function qmShow(name,html){ QM.html=html||''; const o=$('#sceneSel').selectedOptions[0]; $('#qmH').innerHTML='Qué mirar'+(o&&o.value===name?' · <b>'+o.textContent+'</b>':''); $('#qmC').innerHTML=QM.html; $('#qm').hidden=!QM.html; uiDock(); }
 function toggleCine(){ if(cine){ const c=cine; cine=null; $('#toast').hidden=true; Object.assign(UI,c.ui); S.labels=c.labels; syncK('labels'); setSide(c.side); }
-  else { cine={ui:{...UI},side:!$('#side').hidden,labels:S.labels}; Object.assign(UI,{inv:false,data:false,hint:false}); S.labels=false; syncK('labels'); setSide(false); }
+  else { cine={ui:{...UI},side:!$('#side').hidden,labels:S.labels}; Object.assign(UI,{inv:false,data:false,hint:false,qm:false}); S.labels=false; syncK('labels'); setSide(false); }
   uiApply(); if(cine) toast('Todo oculto. Presiona <kbd>H</kbd> o el botón Vista para mostrarlo de nuevo.',2600,true); }
 const Q_NOTE={eco:'30 cuadros por segundo, menos resolución y sombras simples. Para equipos lentos o para ahorrar batería.',normal:'60 cuadros por segundo con la calidad de siempre. Recomendado.',alta:'60 cuadros por segundo y resolución completa en pantallas Retina. Usa mucho la tarjeta gráfica.'};
 function setQuality(q){ const L=QL[q]||QL.eco; GQ.max=Math.min(devicePixelRatio,L.pr); GQ.min=Math.min(COARSE?0.75:1,GQ.max); GQ.pr=GQ.max; GQ.fps=L.fps; GQ.shEvery=L.shEvery;
@@ -2373,10 +2430,27 @@ document.addEventListener('click',e=>{ const c=e.target.closest('[data-close]');
   const o=e.target.closest('[data-open]'); if(o){ uiSet(o.dataset.open,true); return; }
   if(!$('#menu').hidden&&!e.target.closest('#menu,#bView')) toggleMenu(false); });
 // en pantallas angostas, los botones secundarios de la barra superior pasan al menú Vista
-const MORE=['#modeSeg','#speedSel','#bCam','#bHelp','#clock'].map(q=>{ const el=$(q), mk=document.createComment(q); el.before(mk); return [el,mk]; });
+const MORE=['#modeSeg','#speedSel','#bCam','#bTour','#bHelp','#clock'].map(q=>{ const el=$(q), mk=document.createComment(q); el.before(mk); return [el,mk]; });
 function uiLayout(){ const narrow=innerWidth<820, box=$('#menuMore'); for(const [el,mk] of MORE){ if(narrow){ if(el.parentNode!==box) box.appendChild(el); } else if(el.previousSibling!==mk) mk.after(el); } }
 addEventListener('resize',uiLayout); uiLayout();
-$('#bHelp').onclick=()=>{ $('#help').hidden=false; }; $('#helpGo').onclick=()=>{ $('#help').hidden=true; canvas.focus(); };
+$('#bHelp').onclick=()=>{ helpRender(); $('#help').hidden=false; }; $('#helpGo').onclick=()=>{ if(!UI.tour){ UI.tour='skip'; uiSave(); } $('#help').hidden=true; canvas.focus(); };
+// primera clase: cuatro escenarios que ya existen, con su propio msg en «Qué mirar»
+const TOUR={on:false,i:0,prev:null,list:[['d_masas','din'],['d_rampas','din'],['atwood','din'],['m_carros','mom']]};
+function helpRender(){ const t=$('#helpTour'), g=$('#helpGo'), seen=!!UI.tour; t.textContent=seen?'Repetir la primera clase':'Primera clase'; g.textContent=seen?'Empezar':'Explorar libre';
+  t.classList.toggle('primary',!seen); g.classList.toggle('primary',seen); if(seen) t.before(g); else g.before(t); }
+function tourStart(){ $('#help').hidden=true; toggleMenu(false); if(cine) toggleCine();
+  if(!TOUR.on){ TOUR.prev={inv:UI.inv,avatar:UI.avatar,qm:UI.qm}; UI.tourPrev=TOUR.prev; }
+  TOUR.on=true; Object.assign(UI,{inv:false,avatar:false,qm:true}); avatarApply(); uiSave(); uiApply(); tourGo(0); canvas.focus(); }
+function tourGo(i){ TOUR.i=clamp(i,0,TOUR.list.length-1); const [id,sec]=TOUR.list[TOUR.i]; if(S.section!==sec) setSection(sec); loadScene(id); tourRender(); }
+function tourRender(){ const b=$('#tourBar'); b.hidden=!TOUR.on; if(!TOUR.on) return; const n=TOUR.list.length, id=TOUR.list[TOUR.i][0], o=[...$('#sceneSel').options].find(o=>o.value===id);
+  $('#tourN').textContent=`${TOUR.i+1} / ${n}`; $('#tourName').textContent=o?o.textContent:id; $('#tourPrev').disabled=TOUR.i===0; $('#tourNext').textContent=TOUR.i===n-1?'Terminar':'Siguiente'; }
+function tourEnd(state){ if(!TOUR.on) return; TOUR.on=false; const p=TOUR.prev||{}; TOUR.prev=null; delete UI.tourPrev;
+  Object.assign(UI,{inv:p.inv??true,avatar:p.avatar??true,qm:p.qm??true}); if(state==='done'||UI.tour!=='done') UI.tour=state; avatarApply(); uiSave(); uiApply(); tourRender(); }
+function tourSync(name){ if(TOUR.on&&name!==TOUR.list[TOUR.i][0]) tourEnd('skip'); }   // si eligen otro escenario a mano, el recorrido termina
+$('#helpTour').onclick=tourStart; $('#bTour').onclick=()=>{ toggleMenu(false); tourStart(); };
+$('#tourPrev').onclick=()=>tourGo(TOUR.i-1);
+$('#tourNext').onclick=()=>{ if(TOUR.i<TOUR.list.length-1) tourGo(TOUR.i+1); else { tourEnd('done'); toast('Primera clase terminada. Ahora explora libremente; puedes repetirla desde la ayuda.',4200,true); } };
+$('#tourExit').onclick=()=>{ tourEnd(TOUR.i===TOUR.list.length-1?'done':'skip'); canvas.focus(); };
 $('#sceneSel').onchange=e=>{ loadScene(e.target.value); e.target.blur(); };
 // secciones: cada una tiene sus escenarios, desafíos, fórmulas y su forma de mostrar las magnitudes
 // secciones: cada una tiene escenarios, desafíos, fórmulas, panel de datos y su forma de dibujar las magnitudes
@@ -2384,7 +2458,7 @@ const SECS={din:{n:'Dinámica',eq:'ΣF = m·a',first:'patio'},
   ene:{n:'Energía y trabajo',eq:'W = ΔEc',first:'e_trabajo',hud:b=>drawEB(b),ov:()=>energyOverlay(),fx:(b,E)=>energyFormulas(b,E),g:'E'},
   ref:{n:'Sistemas de referencia',eq:'F* = −m·a₀',first:'s_ascensor',hud:b=>refHUD(b),ov:()=>refOverlay(),fx:(b,E)=>refFormulas(b,E),leave:()=>{ player.mesh.visible=camMode==='third'; }},
   ond:{n:'Ondas y oscilaciones',eq:'v = λf',first:'o_pulso',hud:b=>ondHUD(b),ov:()=>ondOverlay(),fx:(b,E)=>ondFormulas(b,E)},
-  flu:{n:'Fluidos',eq:'E = ρgV',first:'f_flotar',hud:b=>fluHUD(b),ov:()=>fluOverlay(),fx:(b,E)=>fluFormulas(b,E)},
+  flu:{n:'Hidrostática',eq:'E = ρgV',first:'f_flotar',hud:b=>fluHUD(b),ov:()=>fluOverlay(),fx:(b,E)=>fluFormulas(b,E)},
   grav:{n:'Gravitación y órbitas',eq:'F = GMm/r²',first:'g_circular',hud:b=>gravHUD(b),ov:()=>gravOverlay(),fx:(b,E)=>gravFormulas(b,E),
     enter:()=>{ groundMesh.visible=false; GRIDS.forEach(g=>g.visible=false); scene.fog.near=200; scene.fog.far=400; scene.background=SKY.space; hemi.intensity=0.45; },
     leave:()=>{ groundMesh.visible=true; GRIDS.forEach(g=>g.visible=true); scene.fog.near=60; scene.fog.far=180; scene.background=SKY.day; hemi.intensity=0.6; player.mesh.visible=camMode==='third'; }},
@@ -2434,7 +2508,7 @@ function buildObjPane(){
   if(e.isBody){
     const mR=e.kind==='car'?[200,5000,10]:e.kind==='ball'?[0.05,50,0.05]:[0.1,500,0.1];
     p.innerHTML=`<div class="objh"><b>${e.name}</b><span class="chip" id="oState">—</span></div>
-      <h3>Diagrama de cuerpo libre</h3><canvas class="cv" id="dcl" height="230" style="height:230px"></canvas>
+      <h3>Diagrama de cuerpo libre</h3><canvas class="cv" id="dcl" height="230" style="height:230px"></canvas><div class="btnrow"><button data-png="dcl">Descargar PNG</button></div>
       <h3>Propiedades</h3>
       ${ctl('Masa <i>m</i> (kg)','om',e.m,mR[0],mR[1],mR[2],'data-b="m"')}
       ${e.kind==='block'?ctl('Lado (m)','os',(e.h.x*2).toFixed(2),0.2,3,0.05,'data-b="side"'):''}
@@ -3178,12 +3252,13 @@ function carToggle(){ if(player.inCar) exitCar(); else { const c=nearest('car',2
     const up=()=>{ if(HOLD[t]){ tKeys[HOLD[t]]=false; b.classList.remove('held'); } }; b.addEventListener('pointerup',up); b.addEventListener('pointercancel',up); b.addEventListener('lostpointercapture',up);
     b.addEventListener('contextmenu',e=>e.preventDefault()); }); }
 function updateTouch(){ if(!IS_TOUCH) return;
-  const q=t=>$(`#tbtn [data-t="${t}"]`), car=player.inCar, frozen=S.section==='grav'||sceneCam||(S.section==='ref'&&(movers.length||turntables.length));
+  const q=t=>$(`#tbtn [data-t="${t}"]`), car=player.inCar, frozen=!UI.avatar||S.section==='grav'||sceneCam||(S.section==='ref'&&(movers.length||turntables.length));
   q('jump').textContent=car?'Frenar':'Saltar'; q('car').textContent=car?'Bajar':'Auto';
   q('push').classList.toggle('ready',!car&&!!pushTarget()); q('kick').classList.toggle('ready',!car&&!!nearest('ball',1.7)); q('car').classList.toggle('ready',car||!!nearest('car',2.8));
   for(const t of ['push','kick']) q(t).disabled=!!car||frozen; q('jump').disabled=frozen&&!car; q('car').disabled=frozen; $('#joy').style.opacity=frozen?0.35:1; }
 function updateHint(){ let h;
-  if(player.inCar) h='<kbd>W</kbd> acelerar · <kbd>S</kbd> frenar / reversa · <kbd>A</kbd><kbd>D</kbd> girar · <kbd>R</kbd> bajar';
+  if(!UI.avatar) h='Modo observador: arrastra para mirar · rueda para acercar · <kbd>P</kbd> pausa · enciende «Personaje» en Vista para caminar';
+  else if(player.inCar) h='<kbd>W</kbd> acelerar · <kbd>S</kbd> frenar / reversa · <kbd>A</kbd><kbd>D</kbd> girar · <kbd>R</kbd> bajar';
   else if(player.pushing) h=`Empujando ${player.pushing.name} con <i>F</i> = ${fmt(S.pushF)} N`;
   else { const t=pushTarget(), b=nearest('ball',1.7), c=nearest('car',2.8); const parts=[];
     if(player.onBeam) parts.push(`Sobre ${player.onBeam.name}: tu peso ${fmt(S.playerM*PP.g)} N a ${fmt(player.beamS)} m del fulcro → <i>τ</i> = ${fmt(-S.playerM*PP.g*player.beamS*Math.cos(player.onBeam.phi))} N·m`);
@@ -3577,17 +3652,20 @@ function chFinish(meas){ const {c,st}=CH; CH.done=true; st.meas=meas;
   chStore.pts+=st.pts; chStore.streak=st.pts>0?chStore.streak+1:0; chStore.best[c.id]=Math.max(chStore.best[c.id]||0,st.pts); chSave();
   renderChal(); renderChalPane(); }
 const stars=p=>p>=100?'★★★':p>=70?'★★☆':p>=30?'★☆☆':'☆☆☆';
-function renderChal(){ const el=$('#chal'); if(!CH){ el.hidden=true; el.classList.remove('min'); $('#chMin').textContent='–'; return; } el.hidden=false; const {c,st}=CH;
+function renderChal(){ const el=$('#chal'); document.body.classList.toggle('chal-on',!!CH); if(!CH){ el.hidden=true; el.classList.remove('min'); $('#chMin').textContent='–'; return; } el.hidden=false; const {c,st}=CH;
   $('#chT').textContent=c.name; $('#chQ').innerHTML=c.q; $('#chU').textContent=c.unit;
   $('#chD').innerHTML=st.data.map(([a,v,u])=>`<dt>${a}</dt><dd>${typeof v==='number'?fmt(v):v} ${u}</dd>`).join('');
   $('#chIn').disabled=$('#chGo').disabled=CH.released; $('#chHint').disabled=CH.released||CH.hint; $('#chNew').hidden=CH.released;
   $('#chHintT').innerHTML=CH.hint?`Pista: <span class="eq" style="font-size:16px">${c.hint}</span>`:'';
   let r='';
   if(CH.released&&!CH.done) r='<p class="note">Soltado. La simulación está midiendo…</p>';
-  if(CH.done){ const sim=isFinite(st.meas);
+  if(CH.done){ const sim=isFinite(st.meas), simErr=sim&&isFinite(st.ans)&&st.ans!==0?Math.abs(st.meas-st.ans)/Math.abs(st.ans):NaN;   // solo informativo: no entra en chScore
     r=`<dl class="kv ch-res"><dt>Tu predicción</dt><dd>${fmt(st.pred,3)} ${c.unit}</dd><dt>Teoría</dt><dd>${fmt(st.ans,3)} ${c.unit}</dd>
-      <dt>Medido en la simulación</dt><dd>${sim?fmt(st.meas,3)+' '+c.unit:'no se pudo medir'}</dd><dt>Error de tu predicción</dt><dd>${fmt(100*st.err,1)} %</dd></dl>
+      <dt>Medido en la simulación</dt><dd>${sim?fmt(st.meas,3)+' '+c.unit:'no se pudo medir'}</dd><dt><b>Tu error respecto de la teoría</b></dt><dd><b>${fmt(100*st.err,1)} %</b></dd></dl>
       <div class="ch-verdict"><span class="chip ${st.pts>0?'eq':'free'}">${stars(st.pts)} ${st.pts>=100?'Excelente':st.pts>=70?'Muy bien':st.pts>=30?'Cerca':'Sin puntos'}</span><b>+${st.pts} puntos</b>${CH.hint?'<span class="note">(con pista)</span>':''}</div>
+      <p class="note">Las estrellas y los puntos dependen solo de tu error respecto de la teoría.</p>
+      <dl class="kv ch-res"><dt>La simulación respecto de la teoría<br><small>solo informativa, no resta puntos</small></dt><dd>${isFinite(simErr)?fmt(100*simErr,2)+' %':'—'}</dd></dl>
+      ${isFinite(simErr)&&simErr>0.02?'<p class="note">Esa diferencia viene del paso Δt o de cómo se mide (por ejemplo 2s/t²). No resta puntos.</p>':''}
       ${c.note?`<p class="note">${c.note(st)}</p>`:''}
       <div class="btnrow"><button id="chSol">Ver solución</button><button id="chAgain">Repetir con otros datos</button><button class="primary" id="chNext">Siguiente desafío</button></div>`; }
   $('#chR').innerHTML=r;
@@ -3828,7 +3906,7 @@ function loadScene(name){
     const b=newBody('block',V(-10,1.0,0),{m:20,side:0.8,color:0xc9a26b}); b.name='Caja sobre el camión'; select(b); paused=true; $('#bPause').textContent='Reanudar'; refView.target=V(-2,1.2,0); camYaw=0; camPitch=0.2; camDist=16;
     msg=`Una caja de 20 kg sobre un camión. Presiona <kbd>P</kbd>. El camión acelera a 3 m/s² y la caja lo acompaña: el roce estático puede darle hasta <i>μ</i><sub>s</sub><i>g</i> = ${fmt(PP.muS*PP.g)} m/s². Después frena a 6 m/s²: el roce ya no alcanza y la caja sigue de largo, deslizando hacia adelante. Desde el camión parece que una fuerza la empuja: <i>F</i>* = −<i>m a</i><sub>0</sub>.`; }
   if(name.startsWith('c_')) msg=chiLoad(name);
-  $('#sceneSel').value=name; if(msg) toast(msg,9000); buildObjPane();
+  $('#sceneSel').value=name; qmShow(name,msg); if(paused&&(!UI.qm||!msg)) toast('Escenario en pausa: pulsa <kbd>P</kbd> para empezar.',3500); buildObjPane(); tourSync(name);
 }
 
 /* ===================== Chile: desastres y su física ===================== */
@@ -3953,7 +4031,7 @@ const CHI_SCENES={
   fx:()=>fRow('Rapidez',`${I('v')} = √(${I('g')}${I('h')})`,'Con 4.000 m de profundidad: 198 m/s = 713 km/h.','Compruébalo con la historia: 10.000 km en 15 horas son 185 m/s, que corresponden a unos 3.500 m de profundidad media.')+fRow('La ola crece al llegar (ley de Green)',`${I('A')} ∝ ${I('h')}<sup>−1/4</sup>`,'','La energía se conserva, pero la onda frena y se comprime en menos agua. De 4.000 m a 20 m de profundidad, la altura crece unas 3,8 veces.')+fRow('Modelo','Aguas someras lineales','','Resuelve la propagación, pero no la inundación sobre tierra. Por eso los 27 m de Constitución no salen de esta maqueta.'),do:'tsunami'},
  c_volcan:{mk:()=>simVolcan(),cam:[6,10,0,.1,.1,40],msg:'La mezcla caliente de gas y ceniza es menos densa que el aire y sube por empuje. Las rocas grandes salen como proyectiles. La ceniza fina cae lento y el viento la lleva lejos. Prueba Calbuco y Chaitén.',
   ev:[['Volcán Chaitén, mayo de 2008','Llevaba unos 9.000 años inactivo. Su columna superó los 20 km, con un índice de explosividad 5. Se evacuó a más de 8.000 personas en la provincia, sin víctimas fatales. El 12 de mayo el río Blanco, obstruido por ceniza, se desbordó y luego cambió de cauce y atravesó la ciudad: un «desastre en cascada».'],['Volcán Calbuco, abril de 2015','Tras 54 años sin actividad relevante, los sismos precursores dieron menos de media hora de aviso. La columna llegó a 15 km y los lahares avanzaron hasta 15 km. Se evacuó a 7.585 personas dentro de un radio de 20 km. En Ensenada se acumularon hasta 25 cm de ceniza.']],
-  fx:()=>fRow('Por qué sube',`${I('E')} = ${I('ρ')}<sub>aire</sub> ${I('g')} ${I('V')}`,'','El empuje de Arquímedes, igual que en la sección Fluidos, pero el «líquido» es la atmósfera.')+fRow('Altura de la columna',`${I('Ṁ')} = 140 ${I('H')}<sup>4,14</sup>`,'<i>Ṁ</i> en kg/s y <i>H</i> en km (Mastin, 2014).','Relación empírica con mucha dispersión: para una misma altura, el material real puede ser varias veces mayor o menor. El dibujo de la columna es ilustrativo.')+fRow('Caída con roce del aire',`${I('v')}<sub>t</sub> = √(4${I('ρ')}${I('g')}${I('d')}/(3${I('C')}<sub>d</sub>${I('ρ')}<sub>aire</sub>))`,'','Para granos muy finos domina la viscosidad (ley de Stokes, <i>v</i> ∝ <i>d</i>²). El panel combina ambos regímenes de forma aproximada.'),do:'volcan'},
+  fx:()=>fRow('Por qué sube',`${I('E')} = ${I('ρ')}<sub>aire</sub> ${I('g')} ${I('V')}`,'','El empuje de Arquímedes, igual que en la sección Hidrostática, pero el «líquido» es la atmósfera.')+fRow('Altura de la columna',`${I('Ṁ')} = 140 ${I('H')}<sup>4,14</sup>`,'<i>Ṁ</i> en kg/s y <i>H</i> en km (Mastin, 2014).','Relación empírica con mucha dispersión: para una misma altura, el material real puede ser varias veces mayor o menor. El dibujo de la columna es ilustrativo.')+fRow('Caída con roce del aire',`${I('v')}<sub>t</sub> = √(4${I('ρ')}${I('g')}${I('d')}/(3${I('C')}<sub>d</sub>${I('ρ')}<sub>aire</sub>))`,'','Para granos muy finos domina la viscosidad (ley de Stokes, <i>v</i> ∝ <i>d</i>²). El panel combina ambos regímenes de forma aproximada.'),do:'volcan'},
  c_aluvion:{mk:()=>simAluvion(),cam:[2.5,2.8,0,.25,.2,22],msg:'Llueve. El agua llena los poros del suelo, levanta presión y le quita apoyo. Cuando el factor de seguridad baja de 1, la ladera se suelta. Mira la saturación con la que falla y cambia la pendiente.',
   ev:[['Aluviones del norte, marzo de 2015','La lluvia del 24 al 27 de marzo, en una zona de extrema aridez, generó 18 aluviones de gran impacto. Dejaron 34 fallecidos, 4 desaparecidos y 31.586 damnificados.'],['Villa Santa Lucía, 16 de diciembre de 2017','Una pared de roca se deslizó sobre un glaciar y formó un aluvión con una velocidad promedio estimada de 72 km/h. Cubrió 90 hectáreas con 3 a 8 m de material y dejó 21 fallecidos y 1 desaparecido.'],['Río Las Minas, Punta Arenas, marzo de 2012','En cuatro días cayeron 55,8 mm. El desborde afectó 97 hectáreas y a unas 4.000 personas. No hizo falta un diluvio: importa cuánta agua cae y dónde.']],
   fx:()=>fRow('Factor de seguridad (talud infinito)',`${I('FS')} = ${frac(I('c'),I('γ')+I('z')+' sen '+I('θ')+' cos '+I('θ'))} + (1 − ${frac(I('m')+I('γ')+'<sub>w</sub>',I('γ'))}) ${frac('tan '+I('φ'),'tan '+I('θ'))}`,'Aquí <i>c</i> = 5 kPa, <i>φ</i> = 32°, <i>γ</i> = 19 kN/m³ y <i>z</i> = 3 m (valores de ejemplo).','Compara lo que sostiene el suelo con lo que lo empuja. El agua no «lubrica»: la presión en los poros reduce la fuerza normal, y con ella el roce.')+fRow('Flujo (modelo de Voellmy)',`${I('a')} = ${I('g')}(sen ${I('θ')} − ${I('μ')} cos ${I('θ')}) − ${frac(I('g')+I('v')+'²',I('ξ')+I('z'))}`,'','Roce más una resistencia que crece con <i>v</i>², como el arrastre de la sección Dinámica. <i>ξ</i> = 500 m/s² es un valor típico.')+fRow('Por qué destruye',`${I('p')} = ½ ${I('ρ')} ${I('v')}²`,'A 72 km/h (20 m/s) y 1.900 kg/m³: unos 390 kPa.','Es una estimación simple, pero unas 39 toneladas por metro cuadrado explican lo que le pasa a una casa.'),do:'aluvion'},
@@ -4011,7 +4089,59 @@ function frame(now){
   uiTick();
 }
 setMode('basic'); muWarn(); simpNote(); setSection('din'); loadScene('patio'); $('#toast').hidden=true;
-setSide(innerWidth>=820&&UI.side!==false); setQuality(UI.q); uiApply();
+setSide(innerWidth>=820&&UI.side!==false); setQuality(UI.q); uiApply(); helpRender();
+
+/* ===================== enlace de la escena ===================== */
+// ?escena=atwood&modo=adv&g=9.81&friccion=1&mus=0.6&muk=0.4&e=1 — se aplica una sola vez, después del arranque
+const URLNUM={g:['g',0,100],mus:['muS',0,3],muk:['muK',0,3],e:['e',0,1]};
+function sceneSecOf(id){ const o=[...$('#sceneSel').options].filter(o=>o.value===id); if(!o.length) return null; const here=o.find(x=>x.parentNode.dataset.sec===S.section); return (here||o[0]).parentNode.dataset.sec; }
+function applyURL(){ const q=new URLSearchParams(location.search); let any=false;
+  const m=q.get('modo'); if(m==='basic'||m==='adv'){ setMode(m); any=true; }
+  for(const [p,[k,lo,hi]] of Object.entries(URLNUM)){ const t=(q.get(p)||'').trim().replace(',','.'); if(!/^\d+(\.\d+)?$/.test(t)) continue; const v=+t; if(!(v>=lo&&v<=hi)) continue; S[k]=v; syncK(k); any=true; }
+  const f=q.get('friccion'); if(f==='0'||f==='1'){ S.friction=f==='1'; syncK('friction'); any=true; }
+  if(any){ syncPlanet(); PP=eff(); muWarn(); }
+  const id=q.get('escena'), sec=id&&/^[a-z0-9_]+$/.test(id)?sceneSecOf(id):null;
+  if(sec){ if(S.section!==sec) setSection(sec); loadScene(id); $('#help').hidden=true; } }
+function sceneURL(){ const w=k=>k in sceneSaved?sceneSaved[k]:S[k], n=x=>String(+(+x).toFixed(4));   // valores del mundo, no los que el escenario cambió por su cuenta
+  const fr=sceneFrictionOff?true:w('friction'), q=new URLSearchParams({escena:$('#sceneSel').value,modo:S.mode,g:n(w('g')),friccion:fr?'1':'0',mus:n(w('muS')),muk:n(w('muK')),e:n(w('e'))});
+  return location.href.split(/[?#]/)[0]+'?'+q.toString(); }
+function copyText(t){ if(navigator.clipboard&&window.isSecureContext) return navigator.clipboard.writeText(t);
+  return new Promise((ok,no)=>{ const a=document.createElement('textarea'); a.value=t; a.style.cssText='position:fixed;opacity:0'; document.body.appendChild(a); a.select(); try{ document.execCommand('copy')?ok():no(); }catch(e){ no(e); } a.remove(); }); }
+$('#linkBtn').onclick=()=>{ const u=sceneURL(); copyText(u).then(()=>toast('Enlace copiado: abre la misma escena con el mismo modo, <i>g</i>, roce y <i>e</i>.',3500,true),()=>toast('No se pudo copiar. Este es el enlace:<br><small>'+u.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</small>',12000,true)); toggleMenu(false); };
+
+/* ===================== descargar gráfico y DCL como PNG ===================== */
+function canvasBlank(cv){ if(!cv||!cv.width||!cv.height) return true; const d=cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data; for(let i=3;i<d.length;i+=16) if(d[i]) return false; return true; }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-png]'); if(!b) return; const cv=document.getElementById(b.dataset.png);
+  if(!sel||!sel.isBody||canvasBlank(cv)){ toast('El '+(b.dataset.png==='dcl'?'diagrama':'gráfico')+' está vacío: selecciona un objeto y deja correr la simulación antes de descargarlo.',4200,true); return; }
+  const o=document.createElement('canvas'); o.width=cv.width; o.height=cv.height; const x=o.getContext('2d'); x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--bg2').trim()||'#1c1d20'; x.fillRect(0,0,o.width,o.height); x.drawImage(cv,0,0);
+  const a=document.createElement('a'); a.download=`principia-${$('#sceneSel').value}-${b.dataset.png==='dcl'?'dcl':'grafico'}.png`; a.href=o.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove(); });
+
+/* ===================== autoexamen: solo con ?test=1 ===================== */
+// usa los escenarios y el mismo step(); no duplica la física. Tolerancias escritas junto a cada caso.
+function runSelfTest(){ const out=[], mode0=S.mode, nf=x=>isFinite(x)?(+x).toFixed(4).replace('.',','):'—';
+  const run=(sec,each)=>{ const dt=PP.dt, n=Math.round(sec/dt); for(let i=0;i<n;i++){ step(dt); simT+=dt; if(each&&each()===false) return; } };
+  const check=(name,meas,theo,tol)=>{ const e=Math.abs(meas-theo)/Math.abs(theo), ok=isFinite(e)&&e<=tol; out.push(`${ok?'PASS':'FAIL'}  ${name}: medido ${nf(meas)}, teoría ${nf(theo)}, error ${isFinite(e)?(100*e).toFixed(2).replace('.',','):'—'} % (tolerancia ${String(100*tol).replace('.',',')} %)`); };
+  const caso=(name,f)=>{ try{ f(); }catch(err){ out.push(`FAIL  ${name}: ${err.message}`); } };
+  if(S.mode!=='basic') setMode('basic'); PP=eff();
+  caso('Atwood 3 kg y 5 kg',()=>{ setSection('din'); loadScene('atwood'); paused=true; const b=bodies.find(x=>x.m===5); if(!b) throw new Error('no está el bloque de 5 kg');
+    const y0=b.pos.y, t=1; run(t); check('Atwood 3 kg y 5 kg, a = 2Δy/t²',2*(y0-b.pos.y)/(t*t),(5-3)/(5+3)*PP.g,0.04); });   // tolerancia 4 %
+  caso('Choque elástico',()=>{ setSection('mom'); loadScene('m_carros'); paused=true; const a=bodies.find(x=>x.m===2), b=bodies.find(x=>x.m===1); if(!a||!b) throw new Error('faltan los bloques');
+    run(2.5); check('Choque elástico, bloque de 2 kg después',a.vel.x,1,0.05); check('Choque elástico, bloque de 1 kg después',b.vel.x,4,0.05); });   // tolerancia 5 %
+  caso('Péndulo',()=>{ setSection('ene'); loadScene('e_pendulo'); paused=true; const l=links.find(x=>x.kind==='string'); if(!l) throw new Error('no está el péndulo');
+    const b=l.a, L=l.L, th=l.th0*DEG; let vmax=0; run(0.6*2*Math.PI*Math.sqrt(L/PP.g)*1.1,()=>{ vmax=Math.max(vmax,b.vel.length()); });
+    check(`Péndulo L = ${nf(L)} m desde ${l.th0}°, rapidez máxima vs √(2gL(1−cos θ))`,vmax,Math.sqrt(2*PP.g*L*(1-Math.cos(th))),0.05); });   // tolerancia 5 %
+  caso('Kepler',()=>{ setSection('grav'); loadScene('g_kepler3'); paused=true; const P=planets[0]; if(!P||bodies.length<2) throw new Error('faltan los satélites');
+    const sats=bodies.slice(0,2).map(b=>({b,ang:0,last:Math.atan2(b.pos.y-P.c.y,b.pos.x-P.c.x),rs:0,n:0,T:NaN}));
+    run(200,()=>{ let all=true; for(const s of sats){ if(isFinite(s.T)) continue; all=false; const a=Math.atan2(s.b.pos.y-P.c.y,s.b.pos.x-P.c.x); let d=a-s.last; if(d>Math.PI) d-=2*Math.PI; if(d<-Math.PI) d+=2*Math.PI; s.ang+=d; s.last=a; s.rs+=s.b.pos.distanceTo(P.c); s.n++;
+        if(Math.abs(s.ang)>=2*Math.PI){ const over=(Math.abs(s.ang)-2*Math.PI)/Math.abs(d||1e-9); s.T=simT-over*PP.dt; s.r=s.rs/s.n; } } return !all; });
+    const [s1,s2]=sats; if(!isFinite(s1.T)||!isFinite(s2.T)) throw new Error('no completaron una vuelta en 200 s');
+    check(`Kepler: T²/r³ (r = ${nf(s2.r)} m) frente a T²/r³ (r = ${nf(s1.r)} m)`,s2.T**2/s2.r**3,s1.T**2/s1.r**3,0.05); });   // tolerancia 5 %
+  if(mode0!==S.mode) setMode(mode0); PP=eff(); setSection('din'); loadScene('patio');
+  const pre=document.createElement('pre'); pre.id='selftest'; pre.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:40;margin:0;max-height:45%;overflow:auto;padding:10px 12px;background:#0f1012;color:#efede7;border:1px solid #f2b134;border-radius:6px;font:12px/1.5 "IBM Plex Mono",monospace;white-space:pre-wrap';
+  const nP=out.filter(l=>l.startsWith('PASS')).length; pre.textContent=`Autoexamen (?test=1) · ${nP}/${out.length} PASS\n`+out.join('\n'); document.body.appendChild(pre); window.__selftest=out; }
+
+applyURL();
+if(new URLSearchParams(location.search).get('test')==='1'){ $('#help').hidden=true; setTimeout(runSelfTest,300); }
 requestAnimationFrame(frame);
 </script>
 
