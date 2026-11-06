@@ -3265,9 +3265,18 @@ function updateHint(){ let h;
     if(t) parts.push(`<kbd>E</kbd> empujar ${t.name}`); if(b) parts.push(`<kbd>F</kbd> patear (${fmt(S.v0)} m/s, ${fmt(S.theta,0)}°)`); if(c) parts.push(`<kbd>R</kbd> subir al auto`);
     h=parts.length?parts.join(' · '):ropeDraft?TOOL_HINT.rope:springDraft?`Resorte en ${springDraft.name}: ahora clic en un soporte, otro objeto o una superficie`:('<kbd>WASD</kbd> moverse · arrastra para mirar · <kbd>1</kbd>–<kbd>9</kbd> barra · <kbd>I</kbd> inventario · <kbd>?</kbd> ayuda'); }
   const el=$('#hintC'); if(el._h!==h){ el.innerHTML=h; el._h=h; } }
+// «Qué mirar» y el dock no tapan los cuadros de abajo (datos, gráfico, barra, controles táctiles): se mide el espacio libre en vivo
+function layoutLesson(){ const vis=el=>el&&el.getClientRects().length>0, R=el=>el.getBoundingClientRect(), hov=(a,b)=>a.left<b.right&&a.right>b.left;
+  const boxes=['#eb','#ro'].map(q=>$(q)).filter(vis), dock=$('#dock');
+  let db=''; if(vis(dock)){ dock.style.bottom=''; const d0=R(dock); let top=Infinity; for(const b of boxes){ const r=R(b); if(hov(r,d0)&&r.bottom>d0.top-2) top=Math.min(top,r.top); }
+    if(top<Infinity) db=Math.round(innerHeight-top+6)+'px'; dock.style.bottom=db; }
+  const L=$('#lesson'); if(!vis(L)) return; const lr=R(L); let lim=innerHeight-8;
+  for(const q of ['#eb','#ro','#dock','#inv','#joy','#tbtn','#hint']){ const el=$(q); if(!vis(el)) continue; const r=R(el); if(r.height&&hov(r,lr)&&r.top>lr.top+20) lim=Math.min(lim,r.top-8); }
+  const mh=Math.max(96,Math.floor(lim-lr.top))+'px'; if(L.style.maxHeight!==mh) L.style.maxHeight=mh; }
+addEventListener('resize',()=>requestAnimationFrame(layoutLesson));
 let uiLast=0, uiPanel=0;
 function uiTick(force){ const now=performance.now(); if(!force&&now-uiLast<(idle?400:120)) return; uiLast=now;
-  $('#clock').textContent=`t = ${fmt(simT)} s`; document.body.classList.toggle('paused',paused); updateRO(); if(UI.hint) updateHint(); updateTouch(); uiDock();
+  $('#clock').textContent=`t = ${fmt(simT)} s`; document.body.classList.toggle('paused',paused); updateRO(); if(UI.hint) updateHint(); updateTouch(); uiDock(); layoutLesson();
   if($('#side').hidden||(!force&&now-uiPanel<250)) return; uiPanel=now;
   if(curTab==='obj') liveObj(); else if(curTab==='form'){ if(!document.activeElement||!$('#paneForm').contains(document.activeElement)) buildFormulas(); } else if(curTab==='graf') drawGraphs(); }
 
