@@ -1,5 +1,7 @@
 # Principia
 
+**▶ Jugar en línea: https://martinestay.github.io/laboratorio-newton/**
+
 Laboratorio de física en 3D que funciona en el navegador, en español, para computador y celular. Empujas bloques, cuelgas péndulos, lanzas satélites y ves en vivo las fuerzas, la energía y las fórmulas de lo que está pasando.
 
 El nombre viene de los *Philosophiæ Naturalis Principia Mathematica*, la obra de 1687 en la que Newton publicó sus leyes del movimiento y la gravitación universal.
